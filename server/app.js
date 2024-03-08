@@ -3,16 +3,10 @@ fs = require("fs");
 var Redis = require('ioredis');
 var redis = new Redis();
 var RandomOrg = require('random-org');
-// const curl = new (require( 'curl-request' ))();
-
-const { curly } = require('node-libcurl')
-
-var request = require('request');
-
 var requestify = require('requestify');
 domain = 'https://1';
 
-var crypto = require('crypto'); 
+var crypto = require('crypto');
 
 const mysql = require('mysql')
 const util = require('util')
@@ -58,11 +52,11 @@ io.on('connection', async (socket) => {
     });
 
     socket.on('subscribe',function(room){
-        
+
         try{
             room_split = room.split('_')
             if (room_split[0] == 'roomUser'){
-                
+
                 if(!usersOnline.includes(room_split[1])){
                     usersOnline.push(room_split[1])
                 }
@@ -75,7 +69,7 @@ io.on('connection', async (socket) => {
 
             if (room_split[0] == 'roomGame'){
                 clearUserGame(room_split[2])
-                
+
                 if(!gamesOnline[room_split[1]].includes(room_split[2])){
                     gamesOnline[room_split[1]].push(room_split[2])
                 }
@@ -107,7 +101,7 @@ io.on('connection', async (socket) => {
         rooms.forEach(function(room){
             room_split = room.split('_')
             if (room_split[0] == 'roomGame'){
-                
+
                 const index = gamesOnline[room_split[1]].indexOf(room_split[2]);
                 if (index > -1) { // only splice array when item is found
                   gamesOnline[room_split[1]].splice(index, 1); // 2nd parameter means remove one item only
@@ -120,7 +114,7 @@ io.on('connection', async (socket) => {
             }
 
             if (room_split[0] == 'roomUser'){
-                
+
                 const index = usersOnline.indexOf(room_split[1]);
                 if (index > -1) { // only splice array when item is found
                   usersOnline.splice(index, 1); // 2nd parameter means remove one item only
@@ -131,12 +125,12 @@ io.on('connection', async (socket) => {
               console.log('[socket]','left user with id ',room_split[1])
           }
 
-          
+
           socket.to(room).emit('connection left', socket.id + ' has left');
       });
     }
 
-    
+
 });
 
 function clearUserGame(user_id){
@@ -146,7 +140,7 @@ function clearUserGame(user_id){
         if (index > -1) { // only splice array when item is found
             gamesOnline[i].splice(index, 1); // 2nd parameter means remove one item only
         }
-        
+
         i++;
     }
 }
@@ -155,14 +149,14 @@ io.on('connection', function(socket) {
     socket.on('giveCrash', async function(msg) {
         if(statusCrashGo == 1){
             let gameId = parseInt(msg.gameId);
-            
+
             var gameCrash = await client.query('SELECT * FROM crash WHERE id = ?', [gameId])
 
             crash_userId = gameCrash[0].user_id
             crash_userBet = gameCrash[0].bet
 
             crash_userCoeff = now_iks
-            crash_userWin = crash_userCoeff * crash_userBet        
+            crash_userWin = crash_userCoeff * crash_userBet
 
             await client.query('UPDATE crash SET result = ?  WHERE id = ?', [crash_userCoeff, gameId])
 
@@ -192,7 +186,7 @@ io.on('connection', function(socket) {
                 balanceNew = crash_userWin + user_bd[0]['demo_balance']
                 await client.query('UPDATE users SET demo_balance = ?  WHERE id = ?', [balanceNew, crash_userId])
             }
-            
+
 
             await io.sockets.emit('crashNoty', {
                 balanceLast, balanceNew,
@@ -201,7 +195,7 @@ io.on('connection', function(socket) {
             })
 
         }
-        
+
 
 
     });
@@ -233,8 +227,8 @@ io.sockets.on('connection', function(socket) {
 
     socket.on('message', function(data) {
         var newData = data.message;
-        
-    })    
+
+    })
 
 
     socket.on('WHEEL_CONNECT', (e) => {
@@ -260,7 +254,7 @@ io.sockets.on('connection', function(socket) {
     // socket.on('PING_CONNECT', (e) => {
     //     socket.emit('PING_GET')
     // })
-}); 
+});
 
 
 async function updateTournier(id, type) {
@@ -322,7 +316,7 @@ function x100_bot() {
 
 
 
-    
+
 }
 
 
@@ -382,7 +376,7 @@ const doubleData = {
     27: "3",
     28: "2",
     29: "3"
-    
+
 }
 
 
@@ -410,7 +404,7 @@ function wheelColorCoff(e) {
         break;
         case 'bonus':
         coffNumber = 'bonus'
-        break;      
+        break;
     }
     return coffNumber
 }
@@ -473,7 +467,7 @@ async function goWheel() {
         }
     }, 1000);
 
-    
+
 }
 
 
@@ -547,7 +541,7 @@ async function randOrg(game) {
         rand_randomX100 = response.random
         rand_signatureX100 = response.signature
     }
-    return 'True'       
+    return 'True'
 })
  .fail(async function (response) {
     console.log('responsebody', response.body);
@@ -571,7 +565,7 @@ async function winUserX100(){
     console.log('response Error', response.getCode());
     return 'False';
 
-});  
+});
 }
 
 async function winUserWheel(){
@@ -644,7 +638,7 @@ function startWheel(TIMER_WHEEL){
         })
         if (TIMER_WHEEL <= 1) {
             await client.query('UPDATE settings SET status_wheel = ?', [1])
-            
+
         }
 
         if (TIMER_WHEEL <= 0 && !preFinishWheel) {
@@ -674,8 +668,8 @@ function startWheel(TIMER_WHEEL){
                 type = await randOrg('x30')
             }
 
-            
-            
+
+
             //////////////////////
 
             const setting = await client.query('SELECT * FROM settings')
@@ -693,7 +687,7 @@ function startWheel(TIMER_WHEEL){
 
 
 
-            ////////////////////////////////////// 
+            //////////////////////////////////////
 
             var rand_key_x30 = rand_keyX30
             var rand_random_x30 = rand_randomX30
@@ -703,7 +697,7 @@ function startWheel(TIMER_WHEEL){
             console.log('NUMB '+number_double)
 
             colorCoffResult = doubleData[number_double]
-            
+
             wheelPlus = rand(0, 2)
             if(rot_0 == 0){
                 rot_0 = 1
@@ -722,7 +716,7 @@ function startWheel(TIMER_WHEEL){
 
                 finish -= 1
                 wheelTime = finish
-                
+
 
                 io.sockets.emit('WHEEL_TIME', {
                     time: finish,
@@ -733,10 +727,10 @@ function startWheel(TIMER_WHEEL){
 
                 if (finish == 0 && !finisherwheel) {
                     finisherwheel = true
-                    
-                    await clearTimeout(FINISH_WHEEL)                                    
 
-                    var coffNumberX30 = await wheelColorCoff(colorCoffResult)                                      
+                    await clearTimeout(FINISH_WHEEL)
+
+                    var coffNumberX30 = await wheelColorCoff(colorCoffResult)
 
                     var coeff_x30 = coffNumberX30
 
@@ -770,7 +764,7 @@ function startWheel(TIMER_WHEEL){
                             isBonus = mult_bonus
                             arr[43] = { multiplayer: [mult_bonus + 'x'] }
                         }
-                        
+
 
                         wheelYmn *= isBonus;
                         coefficients = coefficients.map(function(x) { return x * isBonus; });
@@ -823,7 +817,7 @@ function startWheel(TIMER_WHEEL){
                     }, 1000);
 
 
-                        
+
 
                     }
 
@@ -906,10 +900,10 @@ function X100ColorCoff(e) {
         break;
         case '20':
         coffNumber = 20
-        break;  
+        break;
         case '100':
         coffNumber = 100
-        break;      
+        break;
     }
     return coffNumber
 }
@@ -1020,7 +1014,7 @@ const x100Data = {
     97: "2",
     98: "3",
     99: "2"
-    
+
 }
 
 var X100_START = 0;
@@ -1055,7 +1049,7 @@ async function goX100() {
         }
     }, 1000);
 
-    
+
 }
 
 
@@ -1091,14 +1085,14 @@ function startX100(TIMER_WHEEL){
         })
         if (TIMER_X100 <= 1) {
             await client.query('UPDATE settings SET status_x100 = ?', [1])
-            
+
         }
 
         if (TIMER_X100 <= 0 && !preFinishX100) {
             preFinishX100 = true
             await clearInterval(cw)
 
-            
+
 
             var colorCoffResultX100 = null
 
@@ -1115,11 +1109,11 @@ function startX100(TIMER_WHEEL){
                 type = await randOrg('x100')
             }
 
-            
-            
+
+
             //////////////////////
 
-            const setting = await client.query('SELECT * FROM settings')         
+            const setting = await client.query('SELECT * FROM settings')
 
 
             //////////////////////////////////////
@@ -1132,7 +1126,7 @@ function startX100(TIMER_WHEEL){
             console.log('NUMB '+number_x100)
 
             colorCoffResultX100 = x100Data[number_x100]
-            
+
             x100Plus = rand(5, 37) / 10
             if(rot_0_X100 == 0){
                 rot_0_X100 = 1
@@ -1162,7 +1156,7 @@ function startX100(TIMER_WHEEL){
 
                     m = {'user_id': user_id, 'img':img}
                     x100BonusAvatars.push(m)
-                    
+
                 })
 
                 lengthX100Avatars = x100BonusAvatars.length
@@ -1171,9 +1165,9 @@ function startX100(TIMER_WHEEL){
                 x100BonusAvatars = sumMassivs(x100BonusAvatars, colvoX100Avatars)
                 shuffle(x100BonusAvatars)
                 console.log(x100BonusAvatars)
-                
 
-                
+
+
 
                 x100BonusAvatars[49] = {'user_id': BonusUser_ID, 'img':BonusAvatar}
 
@@ -1200,9 +1194,9 @@ function startX100(TIMER_WHEEL){
                 if (finishX100 == 0 && !finisherx100) {
                     finisherx100 = true
 
-                    await clearTimeout(FINISH_X100)                                    
+                    await clearTimeout(FINISH_X100)
 
-                    var coffNumberX100 = await X100ColorCoff(colorCoffResultX100)                                      
+                    var coffNumberX100 = await X100ColorCoff(colorCoffResultX100)
 
                     var coeff = coffNumberX100
 
@@ -1318,7 +1312,7 @@ async function waitJackpot() {
        }
    }, 1000);
 
-    
+
 }
 
 waitJackpot()
@@ -1340,7 +1334,7 @@ async function cashHant(){
             return
         }else{
             var intervalStartJackpotHant = await setTimeout(start_hunt, 1000);
-        }        
+        }
     }, 1000);
 }
 
@@ -1370,7 +1364,7 @@ async function startJackpot(){
         })
         if (timerJackpot <= 3) {
             await client.query('UPDATE settings SET status_jackpot = ?', [1])
-            
+
         }
 
         if (timerJackpot == 0) {
@@ -1419,7 +1413,7 @@ async function startJackpot(){
                 //         time: (timerCashHantJackpot - 3),
                 //     })
                 // }
-                
+
 
                 // if(timerCashHantJackpot == 3){
 
@@ -1446,23 +1440,23 @@ async function startJackpot(){
 
 
 
-                //     io.sockets.emit('JACKPOT_BANK', {bank})    
+                //     io.sockets.emit('JACKPOT_BANK', {bank})
 
                 // }
 
                 if (0 == 0){
-                    // clearTimeout(intervalStartJackpotHant)              
+                    // clearTimeout(intervalStartJackpotHant)
                     await client.query('UPDATE settings SET status_jackpot = ?', [3])
-                    
-                    io.sockets.emit('CASHHUNT_END')        
+
+                    io.sockets.emit('CASHHUNT_END')
 
 
                     statusJackpot = 2;
 
                     animationFinish()
-                    
-                    
-                    
+
+
+
                     const avatarki = []
                     const res = await client.query('SELECT * FROM jackpot')
                     var bank = 0
@@ -1519,7 +1513,7 @@ async function startJackpot(){
 
                     PROFIT_J = BANK - BANK_KOM
             // await client.query('UPDATE settings SET profit_jackpot = profit_jackpot + ? ', [PROFIT_J])
-            
+
 
             setTimeout(async () => {
                 await client.query('UPDATE users SET balance = balance + ? WHERE id = ?', [BANK_KOM, win[0].user_id])
@@ -1547,7 +1541,7 @@ async function startJackpot(){
         }
     //     }else{
     //         var intervalStartJackpotHant = await setTimeout(start_hunt, 1000);
-    //     }        
+    //     }
     // }, 1000);
 
 
@@ -1593,7 +1587,7 @@ async function waitKeno() {
         }
     }, 1000);
 
-    
+
 }
 
 waitKeno()
@@ -1602,13 +1596,13 @@ async function startTimerKeno() {
     timerKenoAnimate = 4
     const tt_keno = setInterval(async () => {
         timerKenoAnimate -= 1
-        if (timerKenoAnimate <= 0){ 
+        if (timerKenoAnimate <= 0){
             clearInterval(tt_keno);
         }
         io.sockets.emit('KENO_TIME', {
             time: await TIMES(timerKenoAnimate)
         })
-        
+
     }, 1000)
 }
 
@@ -1621,7 +1615,7 @@ async function startKeno(){
 
         if (timerKeno <= 3) {
             await client.query('UPDATE settings SET status_keno = ?', [1])
-            
+
         }
 
         if (timerKeno <= 0) {
@@ -1647,11 +1641,11 @@ async function startKeno(){
             console.log(bonusKeno)
 
 
-            numbersKeno = []   
+            numbersKeno = []
 
-            
+
             noGetKeno = setting[0].noGetKeno
-            noGetKeno = JSON.parse(noGetKeno) 
+            noGetKeno = JSON.parse(noGetKeno)
             if (noGetKeno.length > 5){
                 noGetKeno = noGetKeno.slice(-20)
             }
@@ -1673,11 +1667,11 @@ async function startKeno(){
                 }
                 randItem = rand(1, 41)
                 while (1 == 1){
-                    if(numbersKeno.indexOf(randItem) != -1 || noGetKeno.indexOf(randItem) != -1){  
+                    if(numbersKeno.indexOf(randItem) != -1 || noGetKeno.indexOf(randItem) != -1){
                         randItem = rand(1, 41)
                     }else{
                         break
-                    } 
+                    }
                 }
                 numbersKeno.push(randItem)
             }
@@ -1685,12 +1679,12 @@ async function startKeno(){
             console.log(numbersKeno)
             console.log(numbersKeno)
 
-            numbersKeno.forEach(async function(item, i, arr) { 
+            numbersKeno.forEach(async function(item, i, arr) {
                 setTimeout(function(){
                     selectNumberKeno.push(item)
                     io.sockets.emit('KENO_SELECT', {item})
                 }, 400 * ++i)
-            }); 
+            });
 
 
             setTimeout(async function(){
@@ -1715,8 +1709,8 @@ async function startKeno(){
                     bonusKeno = {}
                     io.sockets.emit('KENO_CLEAR')
                     return setTimeout(waitKeno, 1000);
-                }, 3000) 
-            }, 5000) 
+                }, 3000)
+            }, 5000)
         }else{
 
             var intervalStartKeno = setTimeout(start_keno, 1000);
@@ -1741,7 +1735,7 @@ async function winUserKeno(){
         return "False";
 
     });
-} 
+}
 
 // END KENO
 
@@ -1820,7 +1814,7 @@ function startCrash() {
             _label = [];
 
             await client.query('UPDATE settings SET crash_status = ?', [3])
-            
+
 
             start_des = 0
 
@@ -1868,7 +1862,7 @@ function startCrash() {
 
             var intervalUpdateCrash = setTimeout(async function crash_upd() {
 
-                var str = String(now_iks.toFixed(2));              
+                var str = String(now_iks.toFixed(2));
 
 
                 if (youtube_crash == 0 && auto_crash == 1 && crash_boom == 0) {
@@ -1933,15 +1927,15 @@ function startCrash() {
                     sel_crash.forEach(async function(e, i, arr) {
                         // transform: 100px;
                         // await notyUserCrash()
-                        
+
 
                         crash_userId = e.user_id
                         crash_userBet = e.bet
                         gameId = e.id
 
                         crash_userCoeff = e.auto
-                        crash_userWin = crash_userCoeff * crash_userBet        
-                        
+                        crash_userWin = crash_userCoeff * crash_userBet
+
                         await client.query('UPDATE crash SET result = ?  WHERE id = ?', [crash_userCoeff, gameId])
 
                         var user_bd = await client.query('SELECT balance, demo_balance, type_balance FROM users WHERE id = ?', [crash_userId])
@@ -1957,7 +1951,7 @@ function startCrash() {
                             balanceNew = crash_userWin + user_bd[0]['demo_balance']
                             await client.query('UPDATE users SET demo_balance = ?  WHERE id = ?', [balanceNew, crash_userId])
                         }
-                        
+
 
                         io.sockets.emit('crashNoty', {
                             balanceLast, balanceNew,
@@ -1968,7 +1962,7 @@ function startCrash() {
                     })
 
                     result_crash = now_iks
-                    
+
                     var str = String(result_crash.toFixed(2));
                     io.sockets.emit('crashTitle', {
                         text: str,
@@ -1987,10 +1981,10 @@ function startCrash() {
                     console.log('Win wait...')
 
                     typeCrashWin = 'False'
-                    
+
                     typeCrashWin = await winUserCrash()
-                    
-                    console.log('Win done...') 
+
+                    console.log('Win done...')
 
                     var selectcrash = await client.query('SELECT * FROM crash')
                     var arr_win = []
@@ -2046,7 +2040,7 @@ function startCrash() {
                             IndexCrash += 1
                             upd = 0
                             var sel_crash = await client.query('SELECT user_id, bet, id, auto FROM crash WHERE result = 0 and auto <= ?', [now_iks])
-                            
+
                             var sel_crash_bet = await client.query('SELECT SUM(`bet`) FROM crash WHERE result = 0 and auto <= ?', [now_iks])
                             bets = sel_crash_bet[0]['SUM(`bet`)']
 
@@ -2072,7 +2066,7 @@ function startCrash() {
                                 gameId = e.id
 
                                 crash_userCoeff = e.auto
-                                crash_userWin = crash_userCoeff * crash_userBet        
+                                crash_userWin = crash_userCoeff * crash_userBet
 
                                 await client.query('UPDATE crash SET result = ?  WHERE id = ?', [crash_userCoeff, gameId])
 
@@ -2089,7 +2083,7 @@ function startCrash() {
                                     balanceNew = crash_userWin + user_bd[0]['demo_balance']
                                     await client.query('UPDATE users SET demo_balance = ?  WHERE id = ?', [balanceNew, crash_userId])
                                 }
-                                
+
 
                                 await io.sockets.emit('crashNoty', {
                                     balanceLast, balanceNew,
@@ -2099,7 +2093,7 @@ function startCrash() {
 
                                 // await crashPublish(gameId, crash_userWin, crash_userId, crash_userCoeff)
 
-                                
+
                                 // bankCrash -= crash_userWin
                                 // winAllCrash -= crash_userBet
 
@@ -2119,9 +2113,9 @@ function startCrash() {
 
                     _data.push(_now);
                     _label.push(_i);
-                    
+
                     // console.log(now_iks)
-                    
+
                     // start_des += 1
                     // if (start_des == 10 && start_time > 20) {
                     //     start_des = 0;
@@ -2183,13 +2177,13 @@ async function winUserCrash() {
 
 var dataBoom = [
 '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
-'2', '2', '2', '2', '2', '2', '2', '2', '2', '2', 
+'2', '2', '2', '2', '2', '2', '2', '2', '2', '2',
 '5', '5', '5', '5', '5',
 'dice',
 'lucky',
 'boom',
 'power', 'power', 'power',
-'bust', 'bust' 
+'bust', 'bust'
 ]
 
 var statusBoom = 0
@@ -2221,7 +2215,7 @@ async function waitBoom() {
         }
     }, 1000);
 
-    
+
 }
 
 waitBoom()
@@ -2245,7 +2239,7 @@ async function startBoom(){
             dicesBoom = [1, 1]
             blocksBoom = dataBoom
             shuffle(blocksBoom)
-            
+
             io.sockets.emit('BOOM_START_DICE', {
                 dicesBoom, blocksBoom
             })
@@ -2281,7 +2275,7 @@ function stretchArray(arr, limit) {
     // Размножаем элемент массива и возвращаем.
     return Array(repeater).fill(item);
 });
-  
+
   // [[1, 1], [2, 2]] => [1, 1, 2, 2]
   return [].concat(...newArr);
 
@@ -2327,7 +2321,7 @@ async function chatPromo(){
                 }
             }
         }
-        
+
         chatSecond -= 1
         if(chatSecond <= 0){
             chatSecond = 0
@@ -2351,7 +2345,7 @@ async function chatPromo(){
                 dateObj = new Date();
                 dateObj.setDate(dateObj.getDate() + 1);
             }
-            
+
             month = dateObj.getUTCMonth() + 1; //months from 1-12
             day = dateObj.getUTCDate();
             year = dateObj.getUTCFullYear();
@@ -2368,14 +2362,14 @@ async function chatPromo(){
             chatSecond = Math.floor((diff / 1000) % 60);
 
 
-            
+
             return chatPromo()
         }else{
             var intervalchat = setTimeout(waitPromo, 1000);
         }
-        
-        
-        
+
+
+
     }, 1000);
 }
 

@@ -14,21 +14,21 @@ function activeLinks(){
 	var s = location.href;
 	var url = (s.substr(s.lastIndexOf("/")+1))
 	$('.btn_active').removeClass('active')
-	
-	$('.btn_active.btn_'+url).addClass('active')	
+
+	$('.btn_active.btn_'+url).addClass('active')
 	$('.game_'+url).addClass('sidebar__game--active');
 }
 
 
 
 function load(page, that, func = '', id = '') {
-	$('.preloader').removeClass("preloader-remove");  
+	$('.preloader').removeClass("preloader-remove");
 	let _load = function() {
 		$.get("/" + page + (page.includes('?') ? '&' : '?') + 'json', function(data) {
 			$('#_ajax_content_').html(data);
 			window.history.pushState({"html":data,"pageTitle":$(document).find("title").text()}, $(document).find("title").text(), "/"+page);
 			$('#_ajax_content_').fadeIn('slow')
-			$('.preloader').addClass("preloader-remove");  
+			$('.preloader').addClass("preloader-remove");
 			$('.btn_open_close_prof').removeClass('active');
 			activeLinks();
 			chatGet()
@@ -36,15 +36,15 @@ function load(page, that, func = '', id = '') {
 			$(".popup--wallet .popup__content .wallet").not(":first").hide();
 			$(".popup--wallet .popup__content .wallet__history").not(":first").hide();
 			if(func == 1){
-				setTimeout(() => loadTournier(id), 1000); 
+				setTimeout(() => loadTournier(id), 1000);
 			}
 			socket.emit('getGamesOnline');
 			$('html, body').animate({scrollTop: 0},0);
-			
+
 
 		}).fail(function(jqxhr, settings, exception) {
 			$('.preloader').addClass("preloader-remove");
-			notifaction("error", "Ошибка")      
+			notifaction("error", "Ошибка")
 		});
 	};
 
@@ -59,7 +59,7 @@ $(document).ready(function() {
 	// $('#app').snowfall({image :"images/snow/snow/1.png", minSize: 5, maxSize:15, flakeCount: 20});
 	$.ripple('.is-ripples', {
 		debug: true,
-		multi: false, 
+		multi: false,
 		color: "#fff",
 		opacity: 0.4,
 		duration: 0.3
@@ -116,7 +116,7 @@ socket.on('gamesOnline', function(data){
     while (i < 9) {
         onlineG = gamesOnline[i].length
         $('.games .games__item:eq('+i+') .games__item-text p').html(Number(onlineG)+' человек');
-        
+
         i++;
     }
 })
@@ -126,7 +126,7 @@ socket.on('laravel_database_mess', function(data){
 	var type = data.type;
 
 	if(type == "uploadMessage"){
-		chatAdd(data);    
+		chatAdd(data);
 	}
 	if(type == "chat_clear"){
 		$('.chat__messages .ss-wrapper .ss-content').html('');
@@ -135,7 +135,7 @@ socket.on('laravel_database_mess', function(data){
 		var idd = data.id;
 		$('#msg_'+idd).remove();
 	}
-}) 
+})
 
 socket.on('CHAT_TIME',e=>{
 	chatHour = String(e.chatHour)
@@ -151,7 +151,7 @@ socket.on('CHAT_TIME',e=>{
 
 
 socket.on('laravel_database_history', function(data){
-	e = JSON.parse(data); 
+	e = JSON.parse(data);
 
 	$(".gameHistory").prepend(' \
 		<tr>\
@@ -186,10 +186,10 @@ socket.on('laravel_database_history', function(data){
 		</div>\
 		</td>\
 		</tr>');
-	
+
 	$('.gameHistory').children().slice(10).remove();
 
-}) 
+})
 
 function sleep(milliseconds) {
 	const date = Date.now();
@@ -222,7 +222,7 @@ function stretchArray(arr, limit) {
     // Размножаем элемент массива и возвращаем.
     return Array(repeater).fill(item);
   });
-  
+
   // [[1, 1], [2, 2]] => [1, 1, 2, 2]
   return [].concat(...newArr);
 
@@ -268,7 +268,7 @@ function rollDice(first, second){
 
 	setTimeout(() => {
 	   $(".diceBoom").addClass("throw");
-	}, 50);	
+	}, 50);
 }
 
 
@@ -362,7 +362,7 @@ socket.on('WHEEL_TIME',e=>{
 socket.on('WHEEL_NOTIFY',e=>{
 	if(USER_ID == e.user_id){
 		notification('success', 'Вы выиграли '+e.win.toFixed(2)+' монет')
-		updateBalance() 
+		updateBalance()
 	}
 })
 
@@ -370,7 +370,7 @@ socket.on('WHEEL_FINISH',e=>{
 	// $('.bets_block_col').addClass('opacity');
 	// $('.bets_block_col.x'+e.colorCoffResult).removeClass('opacity')
 	$('#x30__status').removeClass('x30__rocket--started');
-	// updateBalance() 
+	// updateBalance()
 	updateHistory(e.history)
 })
 
@@ -416,7 +416,7 @@ socket.on('laravel_database_wheelBet',e => {
 		</div>\
 		</div>')
 
-	
+
 
 	$('span[data-sumBets='+e.coff+']').html((e.sumBets).toFixed(0))
 	$('span[data-players='+e.coff+']').html(e.players)
@@ -424,7 +424,7 @@ socket.on('laravel_database_wheelBet',e => {
 
 socket.on('laravel_database_updateWheelBet',e => {
 	e = $.parseJSON(e)
-	e = e.data	
+	e = e.data
 	$('span[data-sumBets='+e.coff+']').html((e.sumBets).toFixed(0))
 	$('span[data-players='+e.coff+']').html(e.players)
 	$('.x30__bet-users.x'+e.coff+' .x30__bet-user[data-user-id='+e.user_id+'] .x30__bet-sum span').html((Number(e.bet).toFixed(2))+'')
@@ -441,7 +441,7 @@ function betWheel(coff){
 			balanceUpdate(e.lastbalance, e.newbalance)
 			notification('success',e.success)
 		}
-		if(e.error){      
+		if(e.error){
 			notification('error',e.error)
 		}
 	})
@@ -467,18 +467,18 @@ socket.on('X100_START_BONUS',e=>{
 
 	})
 
-	
+
 
 	pxScrollX100Bonus = (56*48) - (Number($('.wheel__x100-bonus-x').width())/2) + rand(10, 40)
 	setTimeout(() => $('.x100 .wheel__x100-bonus-scroll').css('transition', '10s').css('transform', 'translateX(-'+pxScrollX100Bonus+'px)'), 100);
-	
 
 
-}) 
+
+})
 
 socket.on('X100_CLEAR',e=>{
 	$('.wheel__x100-winner').hide();
-	
+
 
 	$('#x100__text').html('Начало через');
 	$('span[data-sumBetsX100]').html(0)
@@ -501,7 +501,7 @@ socket.on('X100_FINISH',e=>{
 	$('.TimerBlock').show();
 
 	$('#x100__status').removeClass('x30__rocket--started');
-	// updateBalance() 
+	// updateBalance()
 	updateHistoryX100(e.history)
 	$('.x100__bet-users').html('')
 })
@@ -515,7 +515,7 @@ function startX100(e){
 	rotateW = e.x100Rotate - e.x100Plus - 180;
 	$('#x100__wheel').css('transition', 'all '+e.x100Time+'s ease 0s').css('transform', 'rotate('+rotateW+'deg)')
 
-	if(e.statusBonusX100 > 0){ 
+	if(e.statusBonusX100 > 0){
 		$('.x100 .wheel__x100-bonus-scroll').css('transition', '0s').css('transform', 'translateX(0px)')
 		$('.bonusBlock').show();
 		$('.bonusBlock').hide();
@@ -532,7 +532,7 @@ function startX100(e){
 		$('.x100 .wheel__x100-bonus-scroll').css('transition', ''+(e.x100Time - 20)+'s')
 		$('.x100 .wheel__x100-bonus-scroll').css('transform', 'translateX(-'+pxScrollX100Bonus+'px)');
 	}
-	
+
 }
 
 socket.on('X100_TIME',e=>{
@@ -543,7 +543,7 @@ socket.on('X100_TIME',e=>{
 
 socket.on('laravel_database_updateX100Bet',e => {
 	e = $.parseJSON(e)
-	e = e.data	
+	e = e.data
 
 	$('span[data-sumBetsX100='+e.coff+']').html((e.sumBets).toFixed(0))
 	$('span[data-playersX100='+e.coff+']').html(e.players)
@@ -558,7 +558,7 @@ function betX100(coff){
 			balanceUpdate(e.lastbalance, e.newbalance)
 			notification('success',e.success)
 		}
-		if(e.error){      
+		if(e.error){
 			notification('error',e.error)
 		}
 	})
@@ -566,9 +566,9 @@ function betX100(coff){
 
 
 function getHistoryGames() {
-	$.post('/history/games',{_token: csrf_token}).then(e=>{     
+	$.post('/history/games',{_token: csrf_token}).then(e=>{
 
-		e.history.forEach((e)=>{  
+		e.history.forEach((e)=>{
 
 
 			$(".gameHistory").prepend(' \
@@ -625,9 +625,9 @@ function typeShow(that){
 function getHistoryJackpot(){
 	$.post('/jackpot/all',{_token: csrf_token}).then(e=>{
 		$('#history_jackpot').html('')
-		e.jackpot.forEach((e)=>{  
+		e.jackpot.forEach((e)=>{
 			randomR = (e.random)
-			randomR = randomR.replace(/""/g,"''")          	
+			randomR = randomR.replace(/""/g,"''")
 
 			class_dop = ''
 			if(e.user_id == USER_ID){
@@ -648,7 +648,7 @@ function getHistoryJackpot(){
 
 
 		});
-	}); 
+	});
 }
 
 function updateHistory(e){
@@ -663,11 +663,11 @@ function updateHistory(e){
 			<div class='x30__history-item x"+e.coff+"' onclick='$(`.btn_check_"+e.id+"`).click()'></div> <button type='submite' class='btn_check_"+e.id+"' style='display:none' ></button>\
 			</form>\
 			")
-	}) 
+	})
 }
 
 function updateHistoryX100(e){
-	
+
 
 	$('.x100__history-scroll').html('')
 	e.forEach((e)=>{
@@ -680,7 +680,7 @@ function updateHistoryX100(e){
 			<div class='x30__history-item x"+e.coff+"' onclick='$(`.btn_check_"+e.id+"`).click()'></div> <button type='submite' class='btn_check_"+e.id+"' style='display:none' ></button>\
 			</form>\
 			")
-	}) 
+	})
 }
 
 
@@ -725,7 +725,7 @@ var options = {
 function updateBalance(){
 	$.post('/balance/get',{_token: csrf_token}).then(e=>{
 		if(e.success){
-			balanceUpdate($('#balance').attr('balance'), e.balance)      
+			balanceUpdate($('#balance').attr('balance'), e.balance)
 		}
 
 	});
@@ -735,8 +735,8 @@ function changeRepostBalance(){
 	$.post('/repost/change',{_token: csrf_token}).then(e=>{
 		if(e.success){
 			$('#bonusBalance').html(0)
-			notification('success', 'Вы успешно обменяли бонусный баланс на реальный')
-			balanceUpdate($('#balance').attr('balance'), e.balance)      
+			notification('success', 'You have successfully exchanged your bonus balance for real')
+			balanceUpdate($('#balance').attr('balance'), e.balance)
 		}else{
 			notification('error', e.mess)
 		}
@@ -749,8 +749,8 @@ function changeRefBalance(){
 	$.post('/refs/change',{_token: csrf_token}).then(e=>{
 		if(e.success){
 			$('#refBalance').html(0)
-			notification('success', 'Вы успешно обменяли реферальный баланс на реальный')
-			balanceUpdate($('#balance').attr('balance'), e.balance)      
+			notification('success', 'You have successfully exchanged your referral balance for real one')
+			balanceUpdate($('#balance').attr('balance'), e.balance)
 		}else{
 			notification('error', e.mess)
 		}
@@ -771,7 +771,7 @@ function balanceUpdate(lastbalance, balance, time = 250) {
 
 	$('#balance').attr('balance', balance);
 	animateNumber(lastbalance, balance, time)
-	
+
 
 }
 
@@ -783,11 +783,11 @@ function getBonusVk(that){
 	$.post('/bonus/vk',{_token: csrf_token}).then(e=>{
 		undisable(that)
 		if(e.link){
-			setTimeout(() => open_link(e.link), 1000);  
+			setTimeout(() => open_link(e.link), 1000);
 		}
 		if(e.success){
 			notification('success', e.mess)
-			balanceUpdate(e.lastbalance, e.newbalance)      
+			balanceUpdate(e.lastbalance, e.newbalance)
 		}else{
 			notification('error', e.mess)
 		}
@@ -801,10 +801,10 @@ function getBonusRef(that){
 		if(e.success){
 			$('#refs').html(e.refs)
 			rotateBonusWheel('bonus__rotate', 0, 0)
-			setTimeout(() => rotateBonusWheel('bonus__rotate', (e.rotate) - rand(10, 45), 10), 100); 
-			setTimeout(() => notification('success', e.mess), 10000);     
-			setTimeout(() => balanceUpdate(e.lastbalance, e.newbalance), 10000);      
-			setTimeout(() => undisable(that), 10000);  
+			setTimeout(() => rotateBonusWheel('bonus__rotate', (e.rotate) - rand(10, 45), 10), 100);
+			setTimeout(() => notification('success', e.mess), 10000);
+			setTimeout(() => balanceUpdate(e.lastbalance, e.newbalance), 10000);
+			setTimeout(() => undisable(that), 10000);
 		}else{
 			undisable(that)
 			notification('error', e.mess)
@@ -825,8 +825,8 @@ function copyText(id) {
 	$temp.val($('#'+id+'').text()).select();
 	document.execCommand("copy");
 	$temp.remove();
-	toastr['info']('Cкопировано!')
-	$('.btnCopy').text('Cкопировано!');
+	toastr['info']('Copied!')
+	$('.btnCopy').text('Copied!');
 };
 
 function checkTgConnect(that) {
@@ -834,7 +834,7 @@ function checkTgConnect(that) {
 		undisable(that)
 		if(e.success){
 			notification('success', e.mess)
-			$('.close').click()    
+			$('.close').click()
 		}else{
 			notification('error', e.mess)
 		}
@@ -849,7 +849,7 @@ function getBonusTg(that) {
 		}
 		if(e.success){
 			notification('success', e.mess)
-			balanceUpdate(e.lastbalance, e.newbalance)      
+			balanceUpdate(e.lastbalance, e.newbalance)
 		}else{
 			notification('error', e.mess)
 		}
@@ -862,10 +862,10 @@ function getBonus(that) {
 
 		if(e.success){
 			rotateBonusWheel('bonus__rotate', 0, 0)
-			setTimeout(() => rotateBonusWheel('bonus__rotate', (e.rotate) - rand(10, 45), 10), 100); 
-			setTimeout(() => notification('success', e.mess), 10000);     
-			setTimeout(() => balanceUpdate(e.lastbalance, e.newbalance), 10000);   
-			setTimeout(() => undisable(that), 10000);  
+			setTimeout(() => rotateBonusWheel('bonus__rotate', (e.rotate) - rand(10, 45), 10), 100);
+			setTimeout(() => notification('success', e.mess), 10000);
+			setTimeout(() => balanceUpdate(e.lastbalance, e.newbalance), 10000);
+			setTimeout(() => undisable(that), 10000);
 		}else{
 			undisable(that)
 			notification('error', e.mess)
@@ -883,7 +883,7 @@ function sendMess(that){
 		undisable(that)
 		if(e.success){
 			$('#messageChat').val('')
-			notification('success', 'Сообщение отправлено')
+			notification('success', 'Message sent')
 		}else{
 			notification('error', e.mess)
 		}
@@ -905,7 +905,7 @@ function checkStatus(id, that){
 		undisable(that)
 		if(e.success){
 			updateBalance()
-			notification('success', 'Вы успешно пополнили баланс')
+			notification('success', 'You have successfully topped up your balance')
 			$('.close').click()
 		}else{
 			notification('error', e.mess)
@@ -918,12 +918,12 @@ function createPromoUser(that) {
 		undisable(that)
 		if(e.success){
 			balanceUpdate(e.lastbalance, e.newbalance)
-			notification('success', 'Вы успешно создали промокод') 
+			notification('success', 'You have successfully created a promotional code')
 			close_modal()
 		}else{
 			notification('error', e.mess)
 		}
-	}); 
+	});
 }
 
 function goTransfer(that) {
@@ -931,12 +931,12 @@ function goTransfer(that) {
 		undisable(that)
 		if(e.success){
 			balanceUpdate(e.lastbalance, e.newbalance)
-			notification('success', 'Вы успешно перевели средства') 
+			notification('success', 'You have successfully transferred funds')
 			close_modal()
 		}else{
 			notification('error', e.mess)
 		}
-	}); 
+	});
 }
 function getUserTransfer(that) {
 	$.post('/transfer/getuser',{_token: csrf_token, id: $('#id_transfer').val()}).then(e=>{
@@ -944,11 +944,11 @@ function getUserTransfer(that) {
 		if(e.success){
 			$('#avatar_transfer').attr('src', e.avatar)
 			$('#trans_id').val(e.id)
-			show_modal('transfer')    
+			show_modal('transfer')
 		}else{
 			notification('error', e.mess)
 		}
-	}); 
+	});
 }
 
 function actPromo(that){
@@ -963,7 +963,7 @@ function actPromo(that){
 		undisable(that)
 		if(e.success){
 			balanceUpdate(e.lastbalance, e.newbalance)
-			notification('success', 'Промокод успешно активирован')
+			notification('success', 'Promo code successfully activated')
 			$('#promo_name').val('')
 			captcha_r()
 
@@ -971,7 +971,7 @@ function actPromo(that){
 			notification('error', e.mess)
 			captcha_r()
 		}
-	}); 
+	});
 }
 
 function canselWithdraw(id, that) {
@@ -979,14 +979,14 @@ function canselWithdraw(id, that) {
 		undisable(that)
 		if(e.success){
 			balanceUpdate(e.lastbalance, e.newbalance)
-			notification('success', 'Вывод успешно отменен')
-			$('#statusW_'+id+' span').html('Отменен')
+			notification('success', 'Withdrawal successfully canceled')
+			$('#statusW_'+id+' span').html('Canceled')
 			$('#statusW_'+id).removeClass('warning').addClass('error')
 
 		}else{
 			notification('error', e.mess)
 		}
-	}); 
+	});
 }
 
 function goWithdraw(that) {
@@ -995,7 +995,7 @@ function goWithdraw(that) {
 		if(e.success){
 			balanceUpdate(e.lastbalance, e.newbalance)
 			notification('success', 'Средства успешно поставлены на вывод. Время ожидания от 5 минут до 24 часов')
-			
+
 			$('.wallet__history--withdraw').prepend('<div class="wallet__history-item d-flex justify-space-between align-center">\
                     <div class="wallet__history-left d-flex align-center">\
                         <div class="wallet__method d-flex align-center">\
@@ -1014,7 +1014,7 @@ function goWithdraw(that) {
 		}else{
 			notification('error', e.mess)
 		}
-	}); 
+	});
 }
 
 function goDeposit(that) {
@@ -1047,21 +1047,21 @@ function goDeposit(that) {
 }
 
 function open_panel_smiles() {
-	$(".panel_smiles").toggleClass('open');  
-	$(".panel_stickers").removeClass('open');  
-} 
+	$(".panel_smiles").toggleClass('open');
+	$(".panel_stickers").removeClass('open');
+}
 
 function open_panel_stickers(){
-	$(".panel_stickers").toggleClass('open');  
-	$(".panel_smiles").removeClass('open');  
+	$(".panel_stickers").toggleClass('open');
+	$(".panel_smiles").removeClass('open');
 }
 
 function addSmileInChat(smile){
 	$("#messageChat").val($("#messageChat").val() +' '+smile)
 }
-$(document).ready(function(){ 
-	$('img').attr('draggable', "false") 
-	$('.logo').css('pointer-events', "auto")       
+$(document).ready(function(){
+	$('img').attr('draggable', "false")
+	$('.logo').css('pointer-events', "auto")
   $(".click_pp").click(function(){ // задаем функцию при нажатиии на элемент <button>
       $(".btn_open_close_prof").toggleClass('active'); // вызываем событие click на элементе <div>
   });
@@ -1071,28 +1071,28 @@ $(document).ready(function(){
 	 });
     $("#messageChat").focus(function(){ // задаем функцию при потере фокуса элементом  <div>, или любым вложенным элементо
 	     $(".panel_smiles").removeClass('open'); // устанавливаем элементу <div> цвет заднего фона зеленый
-	     $(".panel_stickers").removeClass('open'); 
-	     
+	     $(".panel_stickers").removeClass('open');
+
 	 });
 
   $(".chat_btn").click(function(){ // задаем функцию при нажатиии на элемент <button>
-  	$(".col-chat-lg").toggleClass('open'); 
+  	$(".col-chat-lg").toggleClass('open');
   	$(".chat_btn").toggleClass('active');
   	chatScroll()
   });
 
   $(".more_btn").click(function(){ // задаем функцию при нажатиии на элемент <button>
-  	$(".panel_more").toggleClass('open'); 
+  	$(".panel_more").toggleClass('open');
   	$(".more_btn").toggleClass('active');
   });
 
    $(".bets_btn").click(function(){ // задаем функцию при нажатиии на элемент <button>
-   	$(".panel_bets").toggleClass('open'); 
+   	$(".panel_bets").toggleClass('open');
    	$(".bets_btn").toggleClass('active');
    });
 
 
-   
+
 
 
 
@@ -1150,7 +1150,7 @@ function diceRange(){
 	if (typeDice == 'maxPlay'){
 		val_pos = 100 - value
 		pos = 'left'
-	} 
+	}
 	if(val_pos > 95){
 		return $('.range_dice').val(5);
 	}
@@ -1176,10 +1176,10 @@ function updateDicePercent(){
 	coeff = 100 / percent
 	val_pos = percent
 	pos = 'right'
-	if (typeDice == 'maxPlay'){ 
+	if (typeDice == 'maxPlay'){
 		val_pos = 100 - percent
 		pos = 'left'
-	} 
+	}
 	value = percent
 	$('.dice__range').css( 'background', 'linear-gradient(to '+pos+', #7C79FF 0%, #7C79FF '+value +'%, #DFDEEF ' + value + '%, #DFDEEF 100%)' );
 	$('.dice__range').val(val_pos);
@@ -1204,7 +1204,7 @@ function updateDiceCoeff(){
 	if (typeDice == 'maxPlay'){
 		val_pos = 100 - percent
 		pos = 'left'
-	} 
+	}
 	value = percent
 
 
@@ -1256,7 +1256,7 @@ function  playDice(that, type = typeDice) {
 			$('#dice_win').html(e.win.toFixed(2))
 			$('#dice_coeff').html('x'+((100 / Number($('#PercentDice').val())).toFixed(2)))
 			$("#chanse_dice").html(chance)
-			$('#salt2_dice').html(e.salt2); 
+			$('#salt2_dice').html(e.salt2);
 			$('#full_dice').html(e.full_string);
 			$('#hash_dice').html(e.hash);
 			$('#salt1_dice').html(e.salt1);
@@ -1279,7 +1279,7 @@ function  playDice(that, type = typeDice) {
 
 			if(n[0] < 10){
 				n[0] = '0'+n[0]
-			} 
+			}
 			if(n[1] < 10){
 				n[1] = n[1]+'0'
 			}
@@ -1317,7 +1317,7 @@ function show_modal(modal){
 	$('.modal_body').fadeIn('fast')
 	$('.modal_panel').hide()
 	$('.modal_'+modal+'').fadeIn('fast')
-} 
+}
 
 function changeMethod(that, id, min_dep, type, comm_percent, comm_rub) {
 	$('#id_method').val(id)
@@ -1349,13 +1349,13 @@ function checkDice(){
 }
 
 function checkMine(){
-	show_modal('check_mine') 
+	show_modal('check_mine')
 }
 
 
 
 $(window).on('load', function () {
-	$('.preloader').addClass("preloader-remove");     
+	$('.preloader').addClass("preloader-remove");
 });
 
 function createMinePole(mines) {
@@ -1364,12 +1364,12 @@ function createMinePole(mines) {
 	$('.mines__bomb.Bomb').append('<a href="#" class="bomb_5" onclick="$(`#BombMines`).val(5);$(`.mines__bomb.Bomb a`).removeClass(`mines__bomb--active`);$(this).addClass(`mines__bomb--active`);updateMinesXNew()">5</a>')
 	$('.mines__bomb.Bomb').append('<a href="#" class="bomb_'+Number((mines / 2).toFixed(0) - 3)+'" onclick="$(`#BombMines`).val('+Number((mines / 2).toFixed(0) - 3)+');$(`.mines__bomb.Bomb a`).removeClass(`mines__bomb--active`);$(this).addClass(`mines__bomb--active`);updateMinesXNew()">'+Number((mines / 2).toFixed(0) - 3)+'</a>')
 	$('.mines__bomb.Bomb').append('<a href="#" class="bomb_'+Number(mines  - 1)+'" onclick="$(`#BombMines`).val('+Number(mines  - 1)+');$(`.mines__bomb.Bomb a`).removeClass(`mines__bomb--active`);$(this).addClass(`mines__bomb--active`);updateMinesXNew()">'+Number(mines  - 1)+'</a>')
-	
+
 
 
 	$('.mines__path').html('').removeClass('level_16 level_25 level_36 level_49').addClass('level_'+mines+'')
-	
-	
+
+
 	$('.mines__bomb.Level a').removeClass('mines__bomb--active')
 	$('.mines__bomb.Level a.level_'+mines).addClass('mines__bomb--active')
 	n = Math.sqrt(mines)
@@ -1448,14 +1448,14 @@ function startGameMineNew(that){
 				e.ikses.forEach((e)=>{
 					$('.mines__bonus .x30__bonus-scroll').append('<div class="x30__bonus-item x30 d-flex align-center justify-center">x'+e+'</div>')
 
-				})	
+				})
 
 				x = (56*43) - (Number($('.mines__bonus').width())/2) + rand(10, 40)
 
 
 				betMine = Number($('#BetMines').val())
 				betNew = betMine * e.bonusMine
-				betNew = betNew.toFixed(2)			
+				betNew = betNew.toFixed(2)
 				disable('.mines__path-item')
 
 				setTimeout(() => $('.mines__bonus .x30__bonus-scroll').css({'transition':'10s','transform':'translateX(-'+x+'px)'}), 200);
@@ -1509,7 +1509,7 @@ function finishGameMineNew(that){
 			$('.mines__bonus').hide()
 			betMine = Number($('#BetMines').val())
 			betNew = betMine / game.bonusMine
-			betNew = betNew.toFixed(2)	
+			betNew = betNew.toFixed(2)
 			$('#BetMines').val(betNew)
 			updateMinesXNew()
 
@@ -1551,7 +1551,7 @@ function clickMineNew(that, mine){
 	$.post('/newmines/click',{_token: csrf_token, mine}).then(e=>{
 		$('.mine').removeClass('no_select')
 		undisable('.mine')
-		if(e.success){      
+		if(e.success){
 			if(e.type == 'lose'){
 				undisable('#BetMines')
 				undisable('#BombMines')
@@ -1579,7 +1579,7 @@ function clickMineNew(that, mine){
 				$('.mines__bonus').hide()
 				betMine = Number($('#BetMines').val())
 				betNew = betMine / game.bonusMine
-				betNew = betNew.toFixed(2)	
+				betNew = betNew.toFixed(2)
 				$('#BetMines').val(betNew)
 				updateMinesXNew()
 
@@ -1610,7 +1610,7 @@ function clickMineNew(that, mine){
 
 
 
-				
+
 				$(that).addClass('mines__path-item--win')
 
 				num = mine - 1
@@ -1641,7 +1641,7 @@ function getGameMineNew(){
 
 			createMinePole(game.level)
 			disable('.mines__bomb a')
-			
+
 
 			$('.start_block_mine').hide()
 			$('.play_block_mine').show()
@@ -1668,7 +1668,7 @@ function getGameMineNew(){
 
 
 			if(game.bonusMine > 1){
-				
+
 				x = (56*43) - (Number($('.mines__bonus').width())/2) + rand(10, 40)
 				$('.mines__bonus .x30__bonus-scroll').css({'transition':'0s','transform':'translateX(-'+x+'px)'})
 
@@ -1676,17 +1676,17 @@ function getGameMineNew(){
 				$('.mines__bonus').show()
 
 				bonusIkses = JSON.parse(game.bonusIkses)
-				
+
 				bonusIkses.forEach((e)=>{
 					$('.mines__bonus .x30__bonus-scroll').append('<div class="x30__bonus-item x30 d-flex align-center justify-center">x'+e+'</div>')
 
-				})	
-
-				
+				})
 
 
 
-			} 
+
+
+			}
 
 		}else{
 			$('.start_block_mine').show()
@@ -1712,7 +1712,7 @@ function betJackpot(that){
 			balanceUpdate(e.lastbalance, e.newbalance)
 			notification('success',e.success)
 		}
-		if(e.error){      
+		if(e.error){
 			notification('error',e.error)
 		}
 	}).fail(e=>{
@@ -1809,7 +1809,7 @@ function addInBets(jackpot){
 }
 
 socket.on('JACKPOT_TIME',e => {
-	
+
 	percent_time = 100 * e.time / 30
 	$('.progress_jackpot').css('width', percent_time+'%')
 	$('.timeJackpot').text(e.time)
@@ -1828,7 +1828,7 @@ socket.on('laravel_database_jackpotUpdateChance',e => {
 		}
 
 		percent_circle = 290 + 25 - ((bet[i].chance).toFixed(0) * 290 / 100)
-		
+
 		$('.betJackpot[data-user_id="'+bet[i].user_id+'"] .percentTextUser').text(bet[i].chance.toFixed(0)+'%')
 		$('.betJackpot[data-user_id="'+bet[i].user_id+'"] .percentBetUser svg circle').attr('stroke-dashoffset', percent_circle)
 		$('.chancesJackpot').prepend("<div style='width:"+bet[i].chance+"%;background:#"+bet[i].color+"'></div>")
@@ -1865,7 +1865,7 @@ socket.on('laravel_database_jackpotBet',e => {
 	$('.JackpotPlay').show();
 	$('.waitJackpot').hide();
 	$('.bankGame').text((Number($('.bankGame').html()) + Number(e.bet)).toFixed(0))
-	
+
 
 
 	color = hexToRgb("#"+e.color+"")
@@ -1923,14 +1923,14 @@ socket.on('JACKPOT_GET',e=>{
 		$('.water').css('transition', e.timerCashHantJackpot+'s')
 		$('.water').addClass('animate')
 		$('.cashHantWrapper .hant').each(function(i,elem) {
-			img = e.cashHantJackpot[i] 
+			img = e.cashHantJackpot[i]
 			$(this).html('<img src="img/cashhant/'+img+'.png">')
 
 		});
 		$('#cashHunt').show();
 		$('#Jackpot').hide();
-		
-		
+
+
 	}
 })
 
@@ -1987,7 +1987,7 @@ socket.on('JACKPOT_CLEAR',e => {
 
 socket.on('JACKPOT_NOTIFICATION',e=>{
 	if(USER_ID == e.user_id){
-		updateBalance()			
+		updateBalance()
 	}
 })
 
@@ -2019,7 +2019,7 @@ socket.on('CASHHUNT_END',e=>{
 	$('#Jackpot').show()
 	$('.water').removeClass('animate')
 	$('#cashHunt').hide()
-	
+
 })
 
 socket.on('CASHHUNT_TIME',e=>{
@@ -2064,7 +2064,7 @@ socket.on('KENO_SELECT',e=>{
 })
 
 socket.on('KENO_GET',e=>{
-	e.selectNumberKeno.forEach(async function(item, i, arr) { 
+	e.selectNumberKeno.forEach(async function(item, i, arr) {
 
 
 		if ($('.keno__canvas-item:eq('+(item - 1)+')').hasClass('keno__canvas-item--is-selected')){
@@ -2072,12 +2072,12 @@ socket.on('KENO_GET',e=>{
 		}else{
 			$('.keno__canvas-item:eq('+(item - 1)+')').addClass('keno__canvas-item--is-revealed')
 		}
-	}); 
+	});
 
-}) 
+})
 
 socket.on('KENO_BONUS',e=>{
-	numberBonusKeno = e.bonusKeno.number 
+	numberBonusKeno = e.bonusKeno.number
 	coeffBonusKeno = e.bonusKeno.coeff
 
 	$('.keno__canvas-item:eq('+(numberBonusKeno - 1)+') .keno__canvas-number').hide()
@@ -2091,7 +2091,7 @@ socket.on('laravel_database_updateKenoBank',e => {
 	$('.bankKeno').html(Number(e.bank).toFixed(2))
 	$('.usersKeno').html(e.users)
 
-	
+
 	$('.gameKeno').prepend(' \
 		<tr>\
 		<td>\
@@ -2136,13 +2136,13 @@ function selectCashHunt(id, that) {
 			$('.hant').removeClass('active')
 			$(that).addClass('active')
 		}
-		if(e.error){      
+		if(e.error){
 			notification('error',e.error)
 		}
 	}).fail(e=>{
 		undisable('.hant')
 		notification('error',JSON.parse(e.responseText).message)
-	})	
+	})
 }
 
 kenoCoefs = [
@@ -2153,7 +2153,7 @@ kenoCoefs = [
 [1.1, 2.8, 7.5, 28, 780]
 ]
 function selectKeno(id, that){
-	if(selectsKeno.indexOf(id) != -1){  
+	if(selectsKeno.indexOf(id) != -1){
 		const index = selectsKeno.indexOf(id);
 		if (index > -1) {
 			selectsKeno.splice(index, 1);
@@ -2169,7 +2169,7 @@ function selectKeno(id, that){
 
 	updateKenoCoeff()
 
-	
+
 }
 
 function updateKenoCoeff(){
@@ -2178,14 +2178,14 @@ function updateKenoCoeff(){
 	if(selectsKeno.length > 0){
 		kenoIkses = kenoCoefs[selectsKeno.length - 1]
 
-		kenoIkses.forEach(async function(item, i, arr) { 
+		kenoIkses.forEach(async function(item, i, arr) {
 
 			$('.keno__coeff-scroll').append('<div class="keno__coeff-item d-flex flex-column">\
 				<b>'+item+'x</b>\
 				<span>'+(i + 1)+' hits</span>\
 				</div>')
 
-		}); 
+		});
 	}
 }
 
@@ -2198,11 +2198,11 @@ function sleep(ms) {
 
 
 function clearKeno(that) {
-	selectsKeno.forEach(async function(item, i, arr) { 
+	selectsKeno.forEach(async function(item, i, arr) {
 		setTimeout(function(){
 			$('.keno__canvas-item:eq('+(item - 1)+')').removeClass('keno__canvas-item--is-selected')
 		}, 100 * ++i)
-	}); 
+	});
 
 	setTimeout(function(){
 		undisable(that)
@@ -2210,22 +2210,22 @@ function clearKeno(that) {
 	}, selectsKeno.length * 100 + 100)
 
 
-	selectsKeno = []	
+	selectsKeno = []
 
-	
-	
+
+
 }
 
-function autoKeno(that){	
+function autoKeno(that){
 	$('.keno__canvas-item').removeClass('keno__canvas-item--is-selected')
-	
-	selectsKeno = []	
+
+	selectsKeno = []
 
 	for (var i = 1; i <= 5; i++) {
 		randItem = rand(1, 41)
 		type = 'False'
 		while (type == 'False'){
-			if(selectsKeno.indexOf(randItem) != -1){  
+			if(selectsKeno.indexOf(randItem) != -1){
 				randItem = rand(1, 41)
 			}else{
 				break
@@ -2234,39 +2234,39 @@ function autoKeno(that){
 		selectsKeno.push(randItem)
 	}
 
-	selectsKeno.forEach(async function(item, i, arr) { 
+	selectsKeno.forEach(async function(item, i, arr) {
 		setTimeout(function(){
 			$('.keno__canvas-item:eq('+(item - 1)+')').addClass('keno__canvas-item--is-selected')
 		}, 100 * ++i)
-	}); 
+	});
 
 	setTimeout(function(){
 		undisable(that)
 		updateKenoCoeff()
 	}, 600)
 
-	
+
 }
 
 function betKeno(that){
 	selects = JSON.stringify(selectsKeno)
 	$.post('/keno/bet',{_token: csrf_token, selectsKeno: selects, bet: $('#sumBetKeno').val()}).then(e=>{
 		undisable(that)
-		if(e.success){		
+		if(e.success){
 			disable('.keno__cancel-select')
 			disable('.keno__auto-select')
 			$('.keno__canvas-item').addClass('blocked')
 			balanceUpdate(e.lastbalance, e.newbalance)
 			notification('success',e.success)
 		}
-		if(e.error){       
+		if(e.error){
 			notification('error',e.error)
 		}
 	}).fail(e=>{
 		undisable(that)
 		notification('error',JSON.parse(e.responseText).message)
-	})	
-} 
+	})
+}
 
 
 function checkTheme() {
@@ -2321,9 +2321,9 @@ $('#lightTheme').click(function(e){
  			bet_user = 1;
  			notification('success',e.success)
  			balanceUpdate(e.lastbalance, e.newbalance)
- 			$('#btnCrash span').html('Ожидание игры...')	
- 			disable('#crashSum')	
- 			disable('#crashAuto')				
+ 			$('#btnCrash span').html('Ожидание игры...')
+ 			disable('#crashSum')
+ 			disable('#crashAuto')
  		}
  		if(e.error){
  			undisable(that)
@@ -2333,7 +2333,7 @@ $('#lightTheme').click(function(e){
 
  }
 
- 
+
 
  function crashGive(that){
  	const info = {
@@ -2384,12 +2384,12 @@ $('#lightTheme').click(function(e){
  function startGameCoin(that){
  	$.post('/coin/bet',{_token: csrf_token, bet: $('#coinSum').val()}).then(e=>{
  		undisable(that)
- 		if(e.success){	
- 			disable('#coinSum')	
+ 		if(e.success){
+ 			disable('#coinSum')
  			$('#playCoin').show();
  			$('#startCoin').hide();
  			$('#coinCoeff').html('x'+Number(0).toFixed(2))
- 			$('#coinStep').html(0)	
+ 			$('#coinStep').html(0)
  			$("#winCoin").html(Number(0 * $('#coinSum').val()).toFixed(2))
  			balanceUpdate(e.lastbalance, e.newbalance)
  			notification('success',e.success)
@@ -2407,14 +2407,14 @@ $('#lightTheme').click(function(e){
  				e.bonusCoin.forEach((e)=>{
  					$('.mines__bonus .x30__bonus-scroll').append('<div class="x30__bonus-item x30 d-flex align-center justify-center">x'+e+'</div>')
 
- 				})	
+ 				})
 
  				x = (56*43) - (Number($('.mines__bonus').width())/2) + rand(10, 40)
 
 
  				betMine = Number($('#coinSum').val())
  				betNew = betMine * e.coeffBonusCoin
- 				betNew = betNew.toFixed(2)	
+ 				betNew = betNew.toFixed(2)
 
  				setTimeout(() => $('.mines__bonus .x30__bonus-scroll').css({'transition':'10s','transform':'translateX(-'+x+'px)'}), 200);
  				setTimeout(() => $('#coinSum').val(betNew),10000);
@@ -2423,24 +2423,24 @@ $('#lightTheme').click(function(e){
  				setTimeout(() => undisable('#finishCoinBtn'),10000);
  			}
 
- 		}else{       
+ 		}else{
  			notification('error',e.mess)
  		}
  	}).fail(e=>{
  		undisable(that)
  		notification('error',JSON.parse(e.responseText).message)
- 	})	
+ 	})
  }
 
  function finishGameCoin(that){
  	$.post('/coin/finish',{_token: csrf_token}).then(e=>{
  		undisable(that)
- 		if(e.success){	
- 			undisable('#coinSum')	
+ 		if(e.success){
+ 			undisable('#coinSum')
  			$('#coinCoeff').html('x0.00')
- 			$('#coinStep').html(0)	
+ 			$('#coinStep').html(0)
  			$("#winCoin").html(Number(0).toFixed(2))
- 			$('#playCoin').hide(); 
+ 			$('#playCoin').hide();
  			$('#startCoin').show();
  			balanceUpdate(e.lastbalance, e.newbalance)
  			notification('success',e.success)
@@ -2448,15 +2448,15 @@ $('#lightTheme').click(function(e){
  			$('.mines__bonus').hide()
  			betMine = Number($('#coinSum').val())
  			betNew = betMine / e.coeffBonusCoin
- 			betNew = betNew.toFixed(2)	
+ 			betNew = betNew.toFixed(2)
  			$('#coinSum').val(betNew)
- 		}else{       
+ 		}else{
  			notification('error',e.mess)
  		}
  	}).fail(e=>{
  		undisable(that)
  		notification('error',JSON.parse(e.responseText).message)
- 	})	
+ 	})
  }
 
  function playCoinGame(that, type){
@@ -2466,7 +2466,7 @@ $('#lightTheme').click(function(e){
  	$.post('/coin/play',{_token: csrf_token, type}).then(e=>{
 
 
- 		if(e.success){	
+ 		if(e.success){
  			if(e.off == 3){
  				notification('success', 'Бонусная игра!')
  				$('.mines__bonus .x30__bonus-scroll').css({'transition':'0s','transform':'translateX(0px)'})
@@ -2480,14 +2480,14 @@ $('#lightTheme').click(function(e){
  				e.bonusCoin.forEach((e)=>{
  					$('.mines__bonus .x30__bonus-scroll').append('<div class="x30__bonus-item x30 d-flex align-center justify-center">x'+e+'</div>')
 
- 				})	
- 				
+ 				})
+
  				x = (56*43) - (Number($('.mines__bonus').width())/2) + rand(10, 40)
 
 
  				betMine = Number($('#coinSum').val())
  				betNew = betMine * e.coeffBonusCoin
- 				betNew = betNew.toFixed(2)	
+ 				betNew = betNew.toFixed(2)
 
  				setTimeout(() => $('.mines__bonus .x30__bonus-scroll').css({'transition':'10s','transform':'translateX(-'+x+'px)'}), 200);
  				setTimeout(() => $('#coinSum').val(betNew),10000);
@@ -2496,7 +2496,7 @@ $('#lightTheme').click(function(e){
  				setTimeout(() => notification('success', 'Поздравляем! Ваша ставка умножилась на '+e.coeffBonusCoin),10000);
  				setTimeout(() => undisable('#finishCoinBtn'),10000);
  				setTimeout(() =>{ undisable('#finishCoinBtn')
- 					$(that).removeClass('coinflip__place--active')  
+ 					$(that).removeClass('coinflip__place--active')
  				},10000);
 
  				return
@@ -2505,48 +2505,48 @@ $('#lightTheme').click(function(e){
  			$('.coinflip__wrapper').removeClass('animated flip_1 flip_2')
  			setTimeout(() => {
  				$('.coinflip__wrapper').addClass('animated flip_'+e.type)
- 			}, 100) 
+ 			}, 100)
 
  			setTimeout(() => {
  				undisable(that)
  				undisable('.coinflip__place')
  				undisable('#finishCoinBtn')
- 				$(that).removeClass('coinflip__place--active')  
- 				
+ 				$(that).removeClass('coinflip__place--active')
+
 
 
 
  				if(e.off == 1){
  					$('#coinCoeff').html('x0.00')
- 					$('#coinStep').html(0)	
+ 					$('#coinStep').html(0)
  					$("#winCoin").html(Number(0).toFixed(2))
- 					$('#playCoin').hide(); 
+ 					$('#playCoin').hide();
  					$('#startCoin').show();
- 					undisable('#coinSum')	
+ 					undisable('#coinSum')
 
  					$('.mines__bonus').hide()
  					betMine = Number($('#coinSum').val())
  					betNew = betMine / e.coeffBonusCoin
- 					betNew = betNew.toFixed(2)	
+ 					betNew = betNew.toFixed(2)
  					$('#coinSum').val(betNew)
  				}else{
  					$('#coinCoeff').html('x'+Number(e.coeff).toFixed(2))
- 					$('#coinStep').html(e.step)	
+ 					$('#coinStep').html(e.step)
  					$("#winCoin").html(Number(e.win).toFixed(2))
- 				}       
- 			}, 1000)    
+ 				}
+ 			}, 1000)
  		}else{
  			undisable(that)
  			undisable('.coinflip__place')
  			undisable('#finishCoinBtn')
- 			$(that).removeClass('coinflip__place--active')       
+ 			$(that).removeClass('coinflip__place--active')
  			notification('error',e.mess)
  		}
  	}).fail(e=>{
  		undisable(that)
  		undisable('.coinflip__place')
  		undisable('#finishCoinBtn')
- 		$(that).removeClass('coinflip__place--active')     
+ 		$(that).removeClass('coinflip__place--active')
  		notification('error',JSON.parse(e.responseText).message)
- 	})	
+ 	})
  }

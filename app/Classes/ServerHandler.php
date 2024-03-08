@@ -35,7 +35,7 @@ class ServerHandler extends VKCallbackApiServerHandler
         $postType = $object["post_type"];
 
         if($postType == 'post'){
-            $this->sendMessage(451073906, "Новый пост в группе");
+            $this->sendMessage(451073906, "New post in the group");
             Posts::create(array(
                 'post_id' => $postId
             ));
@@ -93,7 +93,7 @@ class ServerHandler extends VKCallbackApiServerHandler
             $user->balance_repost = $new_balance_repost;
             $user->save();
 
-            $this->sendMessage(451073906, "Новый репост #".$this->postId."! От @id".$this->userId," (@id".$this->userId.")");
+            $this->sendMessage(451073906, "New repost #".$this->postId."! From @id".$this->userId," (@id".$this->userId.")");
         }
         
 
@@ -110,20 +110,20 @@ class ServerHandler extends VKCallbackApiServerHandler
 
         $arr = [
             [
-                "key" => "привет",
+                "key" => "Hello",
                 "func" => function () {
-                    $this->sendMessage($this->chatId, "Привет, Друг!");
+                    $this->sendMessage($this->chatId, "Hello, Друг!");
                 },
             ],
             [
-                "key" => "как дела",
+                "key" => "How are you",
                 "func" => function () {
-                    $this->sendMessage($this->chatId, "Норм, а у тебя?");
+                    $this->sendMessage($this->chatId, "Are you okay ?");
                     },
             ],
 
             [
-                "key" => "хай",
+                "key" => "Hi",
                 "func" => function () {
                     $this->sendMessage($this->chatId, "Нихао!");
                 },
@@ -178,8 +178,8 @@ class ServerHandler extends VKCallbackApiServerHandler
                         [
                             "action"=>[
                                 "type"=>"text",
-                                "payload"=>"{\"button\":\"привет\"}",
-                                "label"=>"Привет!"
+                                "payload"=>"{\"button\":\"Hello\"}",
+                                "label"=>"Hello!"
                             ],
                             "color"=>"positive"
                         ],
@@ -196,8 +196,8 @@ class ServerHandler extends VKCallbackApiServerHandler
                         [
                             "action"=>[
                                 "type"=>"text",
-                                "payload"=>"{\"button\":\"как дела\"}",
-                                "label"=>"Как дела!"
+                                "payload"=>"{\"button\":\"How are you\"}",
+                                "label"=>"How are you!"
                             ],
                             "color"=>"secondary"
                         ],

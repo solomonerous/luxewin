@@ -16,7 +16,7 @@ class VkApi{
         $this->v = $v;
     }
     /**
-     * Отправить сообщение пользователю
+     * Send a message to the user
      * @param int $sendID Идентификатор получателя
      * @param string $message Сообщение
      * @return mixed|null

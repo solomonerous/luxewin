@@ -5662,3 +5662,43 @@
 #5 D:\\work\\projects\\luxewin-main\\luxewin\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
 #6 {main}
 "} 
+[2024-03-08 19:47:40] local.ERROR: There are no commands defined in the "file" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"file\" namespace. at D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php:650)
+[stacktrace]
+#0 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php(701): Symfony\\Component\\Console\\Application->findNamespace()
+#1 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php(259): Symfony\\Component\\Console\\Application->find()
+#2 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php(171): Symfony\\Component\\Console\\Application->doRun()
+#3 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(93): Symfony\\Component\\Console\\Application->run()
+#4 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(129): Illuminate\\Console\\Application->run()
+#5 D:\\work\\projects\\luxewin-main\\luxewin\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#6 {main}
+"} 
+[2024-03-08 19:47:47] local.ERROR: There are no commands defined in the "files" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"files\" namespace. at D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php:650)
+[stacktrace]
+#0 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php(701): Symfony\\Component\\Console\\Application->findNamespace()
+#1 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php(259): Symfony\\Component\\Console\\Application->find()
+#2 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php(171): Symfony\\Component\\Console\\Application->doRun()
+#3 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(93): Symfony\\Component\\Console\\Application->run()
+#4 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(129): Illuminate\\Console\\Application->run()
+#5 D:\\work\\projects\\luxewin-main\\luxewin\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#6 {main}
+"} 
+[2024-03-08 19:47:54] local.ERROR: There are no commands defined in the "data" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"data\" namespace. at D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php:650)
+[stacktrace]
+#0 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php(701): Symfony\\Component\\Console\\Application->findNamespace()
+#1 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php(259): Symfony\\Component\\Console\\Application->find()
+#2 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php(171): Symfony\\Component\\Console\\Application->doRun()
+#3 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(93): Symfony\\Component\\Console\\Application->run()
+#4 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(129): Illuminate\\Console\\Application->run()
+#5 D:\\work\\projects\\luxewin-main\\luxewin\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#6 {main}
+"} 
+[2024-03-08 19:48:23] local.ERROR: There are no commands defined in the "memcached" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"memcached\" namespace. at D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php:650)
+[stacktrace]
+#0 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php(701): Symfony\\Component\\Console\\Application->findNamespace()
+#1 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php(259): Symfony\\Component\\Console\\Application->find()
+#2 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\symfony\\console\\Application.php(171): Symfony\\Component\\Console\\Application->doRun()
+#3 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(93): Symfony\\Component\\Console\\Application->run()
+#4 D:\\work\\projects\\luxewin-main\\luxewin\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(129): Illuminate\\Console\\Application->run()
+#5 D:\\work\\projects\\luxewin-main\\luxewin\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#6 {main}
+"} 

@@ -10,6 +10,7 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
+        "@babel/core": "^7.24.0",
         "axios": "^0.19",
         "bootstrap": "^4.0.0",
         "cross-env": "^7.0",
@@ -21,21 +22,21 @@
         "sass": "^1.20.1",
         "sass-loader": "^8.0.0",
         "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.10"
+        "vue-template-compiler": "^2.6.10",
+        "webpack": "^5.90.3"
     },
     "dependencies": {
-        "curl-request": "^1.1.1",
         "express": "^4.17.1",
         "ioredis": "^4.27.8",
         "mysql": "^2.18.1",
         "node-cron": "^3.0.2",
-        "node-libcurl": "^2.3.3",
-        "node-telegram-bot-api": "^0.61.0",
+        "node-telegram-bot-api": "^0.64.0",
         "nopt": "^5.0.0",
         "random-org": "^2.1.1",
         "requestify": "^0.2.5",
         "socket.io": "^2.5.0",
         "socks5-http-client": "^1.0.4",
-        "util": "^0.12.4"
+        "util": "^0.12.4",
+        "request": "^2.34"
     }
 }

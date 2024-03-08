@@ -61,7 +61,7 @@
 			    document.execCommand("copy");
 			    $temp.remove();
 
-			    $('.btnCopy').text('Cкопировано!');
+			    $('.btnCopy').text('Copied!');
 			};
             </script>
 

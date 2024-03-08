@@ -809,7 +809,7 @@ function changeRepostBalance(){
 	$.post('/repost/change',{_token: csrf_token}).then(e=>{
 		if(e.success){
 			$('#bonusBalance').html(0)
-			notification('success', 'Вы успешно обменяли бонусный баланс на реальный')
+			notification('success', 'You have successfully exchanged your bonus balance for real')
 			balanceUpdate($('#balance').attr('balance'), e.balance)
 		}else{
 			notification('error', e.mess)
@@ -823,7 +823,7 @@ function changeRefBalance(){
 	$.post('/refs/change',{_token: csrf_token}).then(e=>{
 		if(e.success){
 			$('#refBalance').html(0)
-			notification('success', 'Вы успешно обменяли реферальный баланс на реальный')
+			notification('success', 'You have successfully exchanged your referral balance for real one')
 			balanceUpdate($('#balance').attr('balance'), e.balance)
 		}else{
 			notification('error', e.mess)
@@ -899,8 +899,8 @@ function copyText(id) {
 	$temp.val($('#'+id+'').text()).select();
 	document.execCommand("copy");
 	$temp.remove();
-	toastr['info']('Cкопировано!')
-	$('.btnCopy').text('Cкопировано!');
+	toastr['info']('Copied!')
+	$('.btnCopy').text('Copied!');
 };
 
 function checkTgConnect(that) {
@@ -957,7 +957,7 @@ function sendMess(that){
 		undisable(that)
 		if(e.success){
 			$('#messageChat').val('')
-			notification('success', 'Сообщение отправлено')
+			notification('success', 'Message sent')
 		}else{
 			notification('error', e.mess)
 		}
@@ -979,7 +979,7 @@ function checkStatus(id, that){
 		undisable(that)
 		if(e.success){
 			updateBalance()
-			notification('success', 'Вы успешно пополнили баланс')
+			notification('success', 'You have successfully topped up your balance')
 			$('.close').click()
 		}else{
 			notification('error', e.mess)
@@ -992,7 +992,7 @@ function createPromoUser(that) {
 		undisable(that)
 		if(e.success){
 			balanceUpdate(e.lastbalance, e.newbalance)
-			notification('success', 'Вы успешно создали промокод')
+			notification('success', 'You have successfully created a promotional code')
 			close_modal()
 		}else{
 			notification('error', e.mess)
@@ -1005,7 +1005,7 @@ function goTransfer(that) {
 		undisable(that)
 		if(e.success){
 			balanceUpdate(e.lastbalance, e.newbalance)
-			notification('success', 'Вы успешно перевели средства')
+			notification('success', 'You have successfully transferred funds')
 			close_modal()
 		}else{
 			notification('error', e.mess)
@@ -1037,7 +1037,7 @@ function actPromo(that){
 		undisable(that)
 		if(e.success){
 			balanceUpdate(e.lastbalance, e.newbalance)
-			notification('success', 'Промокод успешно активирован')
+			notification('success', 'Promo code successfully activated')
 			$('#promo_name').val('')
 			captcha_r()
 
@@ -1053,8 +1053,8 @@ function canselWithdraw(id, that) {
 		undisable(that)
 		if(e.success){
 			balanceUpdate(e.lastbalance, e.newbalance)
-			notification('success', 'Вывод успешно отменен')
-			$('#statusW_'+id+' span').html('Отменен')
+			notification('success', 'Withdrawal successfully canceled')
+			$('#statusW_'+id+' span').html('Canceled')
 			$('#statusW_'+id).removeClass('warning').addClass('error')
 
 		}else{

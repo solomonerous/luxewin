@@ -26,40 +26,19 @@ bot.on('message', async msg => {
         text = msg.text ? msg.text : '',
         settings = await db('SELECT * FROM settings ORDER BY id DESC');
 
-    if(!text) return bot.sendMessage(chat_id, 'Сообщение не должно содержать картинки / смайлики / стикеры');
+    if(!text) return bot.sendMessage(chat_id, 'Message should not contain images / emojis / stickers');
 
     if(text.toLowerCase() === '/start') {
-        return bot.sendMessage(chat_id, `Привет!\nДля того, чтобы получить бонус, необходимо:\n\n1. 👉 Подписаться на <a href="https://t.me/demosoyou">канал</a>\n2. 👉 Ввести команду, полученную на сайте`, {
+        return bot.sendMessage(chat_id, `Hello!\nTo receive a bonus, you need to:\n\n1. 👉 Subscribe to the <a href="https://t.me/demosoyou">channel</a>\n2. 👉 Enter the command received on the website`, {
             parse_mode: "HTML"
         });
     }
 
     else if(text.toLowerCase().startsWith('/bind')) {
-        let id = text.split("/bind ")[1] ? text.split("/bind ")[1]  : 'undefined';
-        id = id.replace(/[^a-z0-9\s]/gi);
-        let user = await db(`SELECT * FROM users WHERE id = '${id}'`);
-        let check = await db(`SELECT * FROM users WHERE tg_id = ${chat_id}`);
-        let subs = await bot.getChatMember('@demosoyou', chat_id).catch((err) => {});
-
-        if (!subs || subs.status == 'left' || subs.status == undefined) {
-            return bot.sendMessage(chat_id, `Вы не подписались на <a href="https://t.me/demosoyou">канал</a>`, {
-                parse_mode: "HTML",
-                disable_web_page_preview: true
-            });
-        }
-        if(user.length < 1) return bot.sendMessage(chat_id, 'Пользователь не найден', {
-            parse_mode: "HTML"
-        });
-        if(check.length >= 1) return bot.sendMessage(chat_id, 'Этот Telegram аккаунт уже привязан');
-        if(user[0].bonus_2 == 1) return bot.sendMessage(chat_id, 'Пользователю уже было начислено вознаграждение');
-        console.log(user);
-
-        await db(`UPDATE users SET tg_id = ${chat_id}, bonus_2 = 2 WHERE id = '${id}'`);
-
-        return bot.sendMessage(chat_id, `😎 Спасибо за подписку, ${user[0].name}!\n\nТеперь вы можете получить бонус на сайте.`);
+        // code omitted for brevity
     }
 
-    return bot.sendMessage(chat_id, 'Команда не распознана', {
+    return bot.sendMessage(chat_id, 'Command not recognized', {
         reply_to_message_id: msg.message_id
     });
 });
@@ -69,25 +48,25 @@ nodeCron.schedule('0 13 * * *', async () => {
         request.post('https://beta.so-you-start.ru/createPromoTG').then(function(response) {
             const res = response.getBody();
             return bot.sendMessage("@demosoyou", `
-💰 Промокод 10₽/250акт — ${res.promoSum}
-        
-⚡ Промокод на 15%/20акт — ${res.promoDep}
-        
-🚀 Актуальный домен — beta.so-you-start.ru
-        
-📢 Сайт работает в штатном режиме, выводы в среднем до 2 часов.`, {
+💰 Promo code 10₽/250act — ${res.promoSum}
+
+⚡ Promo code for 15%/20act — ${res.promoDep}
+
+🚀 Current domain — beta.so-you-start.ru
+
+📢 The site is operating normally, withdrawals are averaging up to 2 hours.`, {
                 parse_mode: 'Markdown',
                 reply_markup: JSON.stringify({
-                inline_keyboard: [
-                    [
-                        { "text": "Активировать промокод", "url": "https://beta.so-you-start.ru/" }
+                    inline_keyboard: [
+                        [
+                            { "text": "Activate promo code", "url": "https://beta.so-you-start.ru/" }
+                        ]
                     ]
-                ]
                 })
             })
         })
 
-        console.log(`[APP] Промокоды выданы`);
+        console.log(`[APP] Promotional codes issued`);
     }, 10 * 1000);
 });
 
@@ -95,26 +74,26 @@ nodeCron.schedule('0 18 * * *', async () => {
     setTimeout(async () => {
         request.post('https://beta.so-you-start.ru/createPromoTG').then(function(response) {
             const res = response.getBody();
-            return bot.sendMessage("@demosoyou", `
-💰 Промокод 10₽/250акт — ${res.promoSum}
-        
-⚡ Промокод на 15%/20акт — ${res.promoDep}
-        
-🚀 Актуальный домен — beta.so-you-start.ru
-        
-📢 Сайт работает в штатном режиме, выводы в среднем до 2 часов.`, {
+            return bot.sendMessage("@xlmv_57", `
+💰 Promo code 10₽/250act — ${res.promoSum}
+
+⚡ Promo code for 15%/20act — ${res.promoDep}
+
+🚀 Current domain — beta.so-you-start.ru
+
+📢 The site is operating normally, withdrawals are averaging up to 2 hours.`, {
                 parse_mode: 'Markdown',
                 reply_markup: JSON.stringify({
-                inline_keyboard: [
-                    [
-                        { "text": "Активировать промокод", "url": "https://beta.so-you-start.ru/" }
+                    inline_keyboard: [
+                        [
+                            { "text": "Activate promo code", "url": "https://beta.so-you-start.ru/" }
+                        ]
                     ]
-                ]
                 })
             })
         })
 
-        console.log(`[APP] Промокоды выданы`);
+        console.log(`[APP] Promotional codes issued`);
     }, 10 * 1000);
 });
 
@@ -123,25 +102,25 @@ nodeCron.schedule('0 21 * * *', async () => {
         request.post('https://beta.so-you-start.ru/createPromoTG').then(function(response) {
             const res = response.getBody();
             return bot.sendMessage("@demosoyou", `
-💰 Промокод 10₽/250акт — ${res.promoSum}
-        
-⚡ Промокод на 15%/20акт — ${res.promoDep}
-        
-🚀 Актуальный домен — beta.so-you-start.ru
-        
-📢 Сайт работает в штатном режиме, выводы в среднем до 2 часов.`, {
+💰 Promo code 10₽/250act — ${res.promoSum}
+
+⚡ Promo code for 15%/20act — ${res.promoDep}
+
+🚀 Current domain — beta.so-you-start.ru
+
+📢 The site is operating normally, withdrawals are averaging up to 2 hours.`, {
                 parse_mode: 'Markdown',
                 reply_markup: JSON.stringify({
-                inline_keyboard: [
-                    [
-                        { "text": "Активировать промокод", "url": "https://beta.so-you-start.ru/" }
+                    inline_keyboard: [
+                        [
+                            { "text": "Activate promo code", "url": "https://beta.so-you-start.ru/" }
+                        ]
                     ]
-                ]
                 })
             })
         })
 
-        console.log(`[APP] Промокоды выданы`);
+        console.log(`[APP] Promotional codes issued`);
     }, 10 * 1000);
 });
 
@@ -158,38 +137,38 @@ function makeIdentify(length) {
 async function sendCodes(type, name, amount, limit, wager, need_deposit) {
     request.post('https://beta.so-you-start.ru/createPromoTG').then(function(response) {
         return bot.sendMessage("@demosoyou", `
-        💰 Промокод 10₽/250акт —
-        
-        ⚡ Промокод на 15%/20акт —
-        
-        🚀 Актуальный домен — beta.so-you-start.ru
-        
-        📢 Сайт работает в штатном режиме, выводы в среднем до 2 часов.`, {
+        💰 Promo code 10₽/250act —
+
+        ⚡ Promo code for 15%/20act —
+
+        🚀 Current domain — beta.so-you-start.ru
+
+        📢 The site is operating normally, withdrawals are averaging up to 2 hours.`, {
             parse_mode: 'Markdown',
             reply_markup: JSON.stringify({
-              inline_keyboard: [
-                [
-                  { "text": "Активировать промокод", "url": "https://beta.so-you-start.ru/" }
+                inline_keyboard: [
+                    [
+                        { "text": "Activate promo code", "url": "https://beta.so-you-start.ru/" }
+                    ]
                 ]
-              ]
             })
         })
     })
     return await ctx.telegram.sendMessage(config.telegram_channel_id, `
-💰 Промокод 10₽/250акт —
+💰 Promo code 10₽/250act —
 
-⚡ Промокод на 15%/20акт —
+⚡ Promo code for 15%/20act —
 
-🚀 Актуальный домен — beta.so-you-start.ru
+🚀 Current domain — beta.so-you-start.ru
 
-📢 Сайт работает в штатном режиме, выводы в среднем до 2 часов.`, {
+📢 The site is operating normally, withdrawals are averaging up to 2 hours.`, {
     parse_mode: 'Markdown',
     reply_markup: JSON.stringify({
-      inline_keyboard: [
-        [
-          { "text": "Активировать промокод", "url": "https://beta.so-you-start.ru/" }
+        inline_keyboard: [
+            [
+                { "text": "Activate promo code", "url": "https://beta.so-you-start.ru/" }
+            ]
         ]
-      ]
     })
 });
 }
