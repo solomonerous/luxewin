@@ -1,3 +1,7 @@
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 AJAX.registerTeardown('database/triggers.js', function () {
   $(document).off('click', 'a.ajax.add_anchor, a.ajax.edit_anchor');
   $(document).off('click', 'a.ajax.export_anchor');
@@ -5,7 +9,7 @@ AJAX.registerTeardown('database/triggers.js', function () {
   $(document).off('click', 'a.ajax.drop_anchor');
   $(document).off('click', '#bulkActionDropButton');
 });
-const DatabaseTriggers = {
+var DatabaseTriggers = {
   /**
    * @var $ajaxDialog Query object containing the reference to the
    *                  dialog that contains the editor
@@ -20,7 +24,7 @@ const DatabaseTriggers = {
    *
    * @return {bool}
    */
-  validate: function () {
+  validate: function validate() {
     /**
      * @var $elm a jQuery object containing the reference
      *           to an element that is being validated
@@ -56,12 +60,12 @@ const DatabaseTriggers = {
    *
    * @return {bool}
    */
-  validateCustom: function () {
+  validateCustom: function validateCustom() {
     return true;
   },
   // end validateCustom()
 
-  exportDialog: function ($this) {
+  exportDialog: function exportDialog($this) {
     var $msg = Functions.ajaxShowMessage();
     if ($this.attr('id') === 'bulkActionExportButton') {
       var combined = {
@@ -111,12 +115,10 @@ const DatabaseTriggers = {
          * @var buttonOptions Object containing options
          *                     for jQueryUI dialog buttons
          */
-        var buttonOptions = {
-          [Messages.strClose]: {
-            text: Messages.strClose,
-            class: 'btn btn-primary'
-          }
-        };
+        var buttonOptions = _defineProperty({}, Messages.strClose, {
+          text: Messages.strClose,
+          "class": 'btn btn-primary'
+        });
         buttonOptions[Messages.strClose].click = function () {
           $(this).dialog('close').remove();
         };
@@ -144,9 +146,8 @@ const DatabaseTriggers = {
       }
     } // end showExport()
   },
-
   // end exportDialog()
-  editorDialog: function (isNew, $this) {
+  editorDialog: function editorDialog(isNew, $this) {
     var that = this;
     /**
      * @var $edit_row jQuery object containing the reference to
@@ -169,16 +170,13 @@ const DatabaseTriggers = {
       'ajax_request': true
     }, function (data) {
       if (data.success === true) {
-        var buttonOptions = {
-          [Messages.strGo]: {
-            text: Messages.strGo,
-            class: 'btn btn-primary'
-          },
-          [Messages.strClose]: {
-            text: Messages.strClose,
-            class: 'btn btn-secondary'
-          }
-        };
+        var buttonOptions = _defineProperty(_defineProperty({}, Messages.strGo, {
+          text: Messages.strGo,
+          "class": 'btn btn-primary'
+        }), Messages.strClose, {
+          text: Messages.strClose,
+          "class": 'btn btn-secondary'
+        });
         // We have successfully fetched the editor form
         Functions.ajaxRemoveMessage($msg);
         // Now define the function that is called when
@@ -303,7 +301,7 @@ const DatabaseTriggers = {
           // Respect the order: title on href tag, href content, title sent in response
           title: $this.attr('title') || $this.text() || $(data.title).text(),
           modal: true,
-          open: function () {
+          open: function open() {
             $('#rteDialog').dialog('option', 'max-height', $(window).height());
             if ($('#rteDialog').parents('.ui-dialog').height() > $(window).height()) {
               $('#rteDialog').dialog('option', 'height', $(window).height());
@@ -317,7 +315,7 @@ const DatabaseTriggers = {
             });
             $.datepicker.initialized = false;
           },
-          close: function () {
+          close: function close() {
             $(this).remove();
           }
         });
@@ -343,8 +341,7 @@ const DatabaseTriggers = {
       }
     }); // end $.get()
   },
-
-  dropDialog: function ($this) {
+  dropDialog: function dropDialog($this) {
     /**
      * @var $curr_row Object containing reference to the current row
      */
@@ -413,8 +410,7 @@ const DatabaseTriggers = {
       }); // end $.post()
     });
   },
-
-  dropMultipleDialog: function ($this) {
+  dropMultipleDialog: function dropMultipleDialog($this) {
     // We ask for confirmation here
     $this.confirm(Messages.strDropRTEitems, '', function () {
       /**
@@ -499,7 +495,6 @@ const DatabaseTriggers = {
     });
   }
 };
-
 AJAX.registerOnload('database/triggers.js', function () {
   /**
    * Attach Ajax event handlers for the Add/Edit functionality.

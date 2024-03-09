@@ -705,7 +705,7 @@ AJAX.registerOnload('sql.js', function () {
         'sql_query': query,
         'sql_delimiter': delimiter
       },
-      success: function (response) {
+      success: function success(response) {
         Functions.ajaxRemoveMessage($msgbox);
         if (response.success) {
           var dialogContent = '<div class="preview_sql">';
@@ -732,7 +732,7 @@ AJAX.registerOnload('sql.js', function () {
           Functions.ajaxShowMessage(response.error);
         }
       },
-      error: function () {
+      error: function error() {
         Functions.ajaxShowMessage(Messages.strErrorProcessingRequest);
       }
     });
@@ -837,7 +837,7 @@ Sql.browseForeignDialog = function ($thisA) {
       width: Math.min($(window).width() - 100, 700),
       maxHeight: $(window).height() - 100,
       dialogClass: 'browse_foreign_modal',
-      close: function () {
+      close: function close() {
         // remove event handlers attached to elements related to dialog
         $(tableId).off('click', 'td a.foreign_value');
         $(formId).off('click', showAllId);
@@ -979,7 +979,7 @@ Sql.initProfilingTables = function () {
   $('#profiletable').tablesorter({
     widgets: ['zebra'],
     sortList: [[0, 0]],
-    textExtraction: function (node) {
+    textExtraction: function textExtraction(node) {
       if (node.children.length > 0) {
         return node.children[0].innerHTML;
       } else {
@@ -992,7 +992,7 @@ Sql.initProfilingTables = function () {
   $('#profilesummarytable').tablesorter({
     widgets: ['zebra'],
     sortList: [[1, 1]],
-    textExtraction: function (node) {
+    textExtraction: function textExtraction(node) {
       if (node.children.length > 0) {
         return node.children[0].innerHTML;
       } else {

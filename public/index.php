@@ -1,32 +1,10 @@
 <?php
-
-// die('тест');
-session_start();
-
-$_SESSION['admin'] = 1;
-
-if(isset($_POST['code_auth'])){
-    if($_POST['code_auth'] == 'Betux109'){
-        $_SESSION['admin'] = 1;
-        header("Location: https://betusx.ru/");
-        die();
-    }
-}
-if($_SESSION['admin'] == 1){
-
-}else{
-    require 'exit.php';
-    exit();
-}
-
-// die();
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
  * @package  Laravel
  * @author   Taylor Otwell <taylor@laravel.com>
  */
-
 define('LARAVEL_START', microtime(true));
 
 /*

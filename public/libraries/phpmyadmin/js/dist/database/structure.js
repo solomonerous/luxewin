@@ -143,7 +143,7 @@ DatabaseStructure.fetchRealRowCount = function ($target) {
     url: $target.attr('href'),
     cache: false,
     dataType: 'json',
-    success: function (response) {
+    success: function success(response) {
       if (response.success) {
         // If to update all row counts for a DB.
         if (response.real_row_count_all) {
@@ -163,7 +163,7 @@ DatabaseStructure.fetchRealRowCount = function ($target) {
         Functions.ajaxShowMessage(Messages.strErrorRealRowCount);
       }
     },
-    error: function () {
+    error: function error() {
       Functions.ajaxShowMessage(Messages.strErrorRealRowCount);
     }
   });
@@ -180,9 +180,9 @@ AJAX.registerOnload('database/structure.js', function () {
       event.stopPropagation();
       $('#makeConsistentWithCentralListModal').modal('show').on('shown.bs.modal', function () {
         $('#makeConsistentWithCentralListContinue').on('click', function () {
-          const $form = $('#tablesForm');
-          const argSep = CommonParams.get('arg_separator');
-          const data = $form.serialize() + argSep + 'ajax_request=true' + argSep + 'ajax_page_request=true';
+          var $form = $('#tablesForm');
+          var argSep = CommonParams.get('arg_separator');
+          var data = $form.serialize() + argSep + 'ajax_request=true' + argSep + 'ajax_page_request=true';
           Functions.ajaxShowMessage();
           AJAX.source = $form;
           $.post('index.php?route=/database/structure/central-columns/make-consistent', data, AJAX.responseHandler);
@@ -218,7 +218,7 @@ AJAX.registerOnload('database/structure.js', function () {
         dataType: 'html',
         data: formData
       }).done(function (modalBody) {
-        const bulkActionModal = $('#bulkActionModal');
+        var bulkActionModal = $('#bulkActionModal');
         bulkActionModal.on('show.bs.modal', function () {
           this.querySelector('.modal-title').innerText = modalTitle;
           this.querySelector('.modal-body').innerHTML = modalBody;

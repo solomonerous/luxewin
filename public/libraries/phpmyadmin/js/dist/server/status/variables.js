@@ -31,7 +31,7 @@ AJAX.registerOnload('server/status/variables.js', function () {
   });
   $('#dontFormat').on('change', function () {
     // Hiding the table while changing values speeds up the process a lot
-    const serverStatusVariables = $('#serverStatusVariables');
+    var serverStatusVariables = $('#serverStatusVariables');
     serverStatusVariables.hide();
     serverStatusVariables.find('td.value span.original').toggle(this.checked);
     serverStatusVariables.find('td.value span.formatted').toggle(!this.checked);

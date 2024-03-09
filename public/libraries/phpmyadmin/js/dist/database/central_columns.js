@@ -157,7 +157,7 @@ AJAX.registerOnload('database/central_columns.js', function () {
       url: 'index.php?route=/database/central-columns',
       data: datastring + CommonParams.get('arg_separator') + 'ajax_request=true',
       dataType: 'json',
-      success: function (data) {
+      success: function success(data) {
         if (data.message !== '1') {
           Functions.ajaxShowMessage('<div class="alert alert-danger" role="alert">' + data.message + '</div>', false);
         } else {
@@ -177,7 +177,7 @@ AJAX.registerOnload('database/central_columns.js', function () {
         $('#f_' + rownum + ' input, #f_' + rownum + ' select,#f_' + rownum + ' .default_value, #f_' + rownum + ' .open_enum_editor').hide();
         $('#tableslistcontainer').find('.checkall').show();
       },
-      error: function () {
+      error: function error() {
         Functions.ajaxShowMessage('<div class="alert alert-danger" role="alert">' + Messages.strErrorProcessingRequest + '</div>', false);
       }
     });

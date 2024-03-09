@@ -859,7 +859,7 @@ AJAX.registerOnload('export.js', function () {
     Export.addAlias(Messages.strAliasColumn, db + '.' + table + '.' + column, 'aliases[' + db + '][tables][' + table + '][colums][' + column + ']', $('#column_alias_name').val());
     $('#column_alias_name').val('');
   });
-  var setSelectOptions = function (doCheck) {
+  var setSelectOptions = function setSelectOptions(doCheck) {
     Functions.setSelectOptions('dump', 'db_select[]', doCheck);
   };
   $('#db_select_all').on('click', function (e) {

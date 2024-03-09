@@ -19,7 +19,7 @@ DesignerPage.saveToNewPage = function (db, pageName, tablePositions, callback) {
   DesignerPage.createNewPage(db, pageName, function (page) {
     if (page) {
       var tblCords = [];
-      var saveCallback = function (id) {
+      var saveCallback = function saveCallback(id) {
         tblCords.push(id);
         if (tablePositions.length === tblCords.length) {
           page.tblCords = tblCords;

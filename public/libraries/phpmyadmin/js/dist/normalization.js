@@ -58,7 +58,7 @@ function goTo3NFStep1(newTables) {
       $('<input>').attr({
         type: 'button',
         value: Messages.strDone,
-        class: 'btn btn-primary'
+        "class": 'btn btn-primary'
       }).on('click', function () {
         processDependencies('', true);
       }).appendTo('.tblFooters');
@@ -83,7 +83,7 @@ function goTo2NFStep1() {
       $('<input>').attr({
         type: 'submit',
         value: Messages.strDone,
-        class: 'btn btn-primary'
+        "class": 'btn btn-primary'
       }).on('click', function () {
         processDependencies(data.primary_key);
       }).appendTo('.tblFooters');
@@ -200,7 +200,7 @@ function goTo2NFFinish(pd) {
     url: 'index.php?route=/normalization',
     data: datastring,
     async: false,
-    success: function (data) {
+    success: function success(data) {
       if (data.success === true) {
         if (data.queryError === false) {
           if (normalizeto === '3nf') {
@@ -245,7 +245,7 @@ function goTo3NFFinish(newTables) {
     url: 'index.php?route=/normalization',
     data: datastring,
     async: false,
-    success: function (data) {
+    success: function success(data) {
       if (data.success === true) {
         if (data.queryError === false) {
           $('#mainContent legend').html(data.legendText);
@@ -295,7 +295,7 @@ function goTo2NFStep2(pd, primaryKey) {
       url: 'index.php?route=/normalization',
       data: datastring,
       async: false,
-      success: function (data) {
+      success: function success(data) {
         if (data.success === true) {
           extra += data.message;
         } else {
@@ -344,7 +344,7 @@ function goTo3NFStep2(pd, tablesTds) {
       url: 'index.php?route=/normalization',
       data: datastring,
       async: false,
-      success: function (data) {
+      success: function success(data) {
         dataParsed = data;
         if (data.success === true) {
           extra += dataParsed.html;
@@ -439,7 +439,7 @@ function moveRepeatingGroup(repeatingCols) {
     url: 'index.php?route=/normalization',
     data: datastring,
     async: false,
-    success: function (data) {
+    success: function success(data) {
       if (data.success === true) {
         if (data.queryError === false) {
           goToStep3();
@@ -495,13 +495,13 @@ AJAX.registerOnload('normalization.js', function () {
           type: 'submit',
           id: 'saveSplit',
           value: Messages.strSave,
-          class: 'btn btn-primary'
+          "class": 'btn btn-primary'
         }).appendTo('.tblFooters');
         $('<input>').attr({
           type: 'submit',
           id: 'cancelSplit',
           value: Messages.strCancel,
-          class: 'btn btn-secondary'
+          "class": 'btn btn-secondary'
         }).on('click', function () {
           $('#newCols').html('');
           $(this).parent().html('');
@@ -561,13 +561,13 @@ AJAX.registerOnload('normalization.js', function () {
           type: 'submit',
           id: 'saveNewPrimary',
           value: Messages.strSave,
-          class: 'btn btn-primary'
+          "class": 'btn btn-primary'
         }).appendTo('.tblFooters');
         $('<input>').attr({
           type: 'submit',
           id: 'cancelSplit',
           value: Messages.strCancel,
-          class: 'btn btn-secondary'
+          "class": 'btn btn-secondary'
         }).on('click', function () {
           $('#newCols').html('');
           $(this).parent().html('');
@@ -632,7 +632,7 @@ AJAX.registerOnload('normalization.js', function () {
       $('<input>').attr({
         type: 'submit',
         value: Messages.strCancel,
-        class: 'btn btn-secondary'
+        "class": 'btn btn-secondary'
       }).on('click', function () {
         $('#newCols').html('');
         $('#extra input[type=checkbox]').prop('checked', false);
@@ -640,7 +640,7 @@ AJAX.registerOnload('normalization.js', function () {
       $('<input>').attr({
         type: 'submit',
         value: Messages.strGo,
-        class: 'btn btn-primary'
+        "class": 'btn btn-primary'
       }).on('click', function () {
         moveRepeatingGroup(repeatingCols);
       }).appendTo('.tblFooters');

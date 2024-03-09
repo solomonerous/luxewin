@@ -16,13 +16,13 @@ AJAX.registerTeardown('server/user_groups.js', function () {
  * Bind event handlers
  */
 AJAX.registerOnload('server/user_groups.js', function () {
-  const deleteUserGroupModal = $('#deleteUserGroupModal');
+  var deleteUserGroupModal = $('#deleteUserGroupModal');
   deleteUserGroupModal.on('show.bs.modal', function (event) {
-    const userGroupName = $(event.relatedTarget).data('user-group');
+    var userGroupName = $(event.relatedTarget).data('user-group');
     this.querySelector('.modal-body').innerText = Functions.sprintf(Messages.strDropUserGroupWarning, Functions.escapeHtml(userGroupName));
   });
   deleteUserGroupModal.on('shown.bs.modal', function (event) {
-    const userGroupName = $(event.relatedTarget).data('user-group');
+    var userGroupName = $(event.relatedTarget).data('user-group');
     $('#deleteUserGroupConfirm').on('click', function () {
       $.post('index.php?route=/server/user-groups', {
         'deleteUserGroup': true,

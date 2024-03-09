@@ -25,10 +25,10 @@ function initTableSorter(tabid) {
 $(function () {
   $.tablesorter.addParser({
     id: 'fancyNumber',
-    is: function (s) {
+    is: function is(s) {
       return /^[0-9]?[0-9,\\.]*\s?(k|M|G|T|%)?$/.test(s);
     },
-    format: function (s) {
+    format: function format(s) {
       var num = jQuery.tablesorter.formatFloat(s.replace(Messages.strThousandsSeparator, '').replace(Messages.strDecimalSeparator, '.'));
       var factor = 1;
       switch (s.charAt(s.length - 1)) {
@@ -55,10 +55,10 @@ $(function () {
   });
   $.tablesorter.addParser({
     id: 'withinSpanNumber',
-    is: function (s) {
+    is: function is(s) {
       return /<span class="original"/.test(s);
     },
-    format: function (s, table, html) {
+    format: function format(s, table, html) {
       var res = html.innerHTML.match(/<span(\s*style="display:none;"\s*)?\s*class="original">(.*)?<\/span>/);
       return res && res.length >= 3 ? res[2] : 0;
     },

@@ -1,3 +1,4 @@
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 /**
  * @fileoverview    functions used for visualizing GIS data
  *
@@ -124,7 +125,7 @@ function drawOpenLayerMap() {
   $('#placeholder').hide();
   $('#openlayersmap').show();
   // Function doesn't work properly if #openlayersmap is hidden
-  if (typeof map !== 'object') {
+  if (_typeof(map) !== 'object') {
     // Draws openStreetMap with openLayers
     map = drawOpenLayers();
   }
@@ -219,11 +220,10 @@ AJAX.registerOnload('table/gis_visualization.js', function () {
   var dragX = 0;
   var dragY = 0;
   $('svg').draggable({
-    helper: function () {
+    helper: function helper() {
       return $('<div>'); // Give a fake element to be used for dragging display
     }
   });
-
   $(document).on('dragstart', 'svg', function (event, dd) {
     $('#placeholder').addClass('placeholderDrag');
     dragX = Math.round(dd.offset.left);

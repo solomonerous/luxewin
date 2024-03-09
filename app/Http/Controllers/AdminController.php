@@ -3,24 +3,24 @@
 namespace App\Http\Controllers;
 
 
-use Illuminate\Http\Request;
 use Redis;
-use App\Payment;
-use App\Promo;
 use App\User;
-use App\RandomKey;
+use App\Promo;
+use App\Repost;
+use App\Status;
+use App\Payment;
+use App\Setting;
 use App\DepPromo;
 use App\Withdraw;
-use App\ActivePromo;
-use App\Setting;
-use App\SystemWithdraw;
+use App\RandomKey;
 use App\SystemDep;
-use App\Authorization;
-use App\Status;
-use App\Repost;
 use App\Tourniers;
-
+use App\ActivePromo;
+use App\Authorization;
 use ElephantIO\Client;
+use App\SystemWithdraw;
+
+use Illuminate\Http\Request;
 use ElephantIO\Engine\SocketIO\Version2X;
 
 class AdminController extends Controller

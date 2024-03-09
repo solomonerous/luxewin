@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 var DesignerObjects = {
-  PdfPage: function (dbName, pageDescr, tblCords) {
+  PdfPage: function PdfPage(dbName, pageDescr, tblCords) {
     // no dot set the auto increment before put() in the database
     // issue #12900
     // eslint-disable-next-line no-unused-vars
@@ -9,7 +9,7 @@ var DesignerObjects = {
     this.pageDescr = pageDescr;
     this.tblCords = tblCords;
   },
-  TableCoordinate: function (dbName, tableName, pdfPgNr, x, y) {
+  TableCoordinate: function TableCoordinate(dbName, tableName, pdfPgNr, x, y) {
     // no dot set the auto increment before put() in the database
     // issue #12900
     // var id;

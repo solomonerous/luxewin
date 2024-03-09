@@ -3,8 +3,8 @@
  * Dummy implementation of the ajax page loader
  */
 var AJAX = {
-  registerOnload: function (idx, func) {
+  registerOnload: function registerOnload(idx, func) {
     $(func);
   },
-  registerTeardown: function (idx, func) {}
+  registerTeardown: function registerTeardown(idx, func) {}
 };

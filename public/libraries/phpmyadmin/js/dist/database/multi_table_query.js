@@ -70,7 +70,7 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
         'ajax_request': '1',
         'token': CommonParams.get('token')
       },
-      success: function (response) {
+      success: function success(response) {
         foreignKeys = response.foreignKeyConstrains;
       }
     });
@@ -122,7 +122,7 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
       type: 'POST',
       url: 'index.php?route=/database/multi-table-query/query',
       data: data,
-      success: function (data) {
+      success: function success(data) {
         var $resultsDom = $(data.message);
         $resultsDom.find('.ajax:not(.pageselector)').each(function () {
           $(this).on('click', function (event) {
@@ -139,7 +139,6 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
       }
     });
   });
-
   $('#add_column_button').on('click', function () {
     columnCount++;
     var $newColumnDom = $($('#new_column_layout').html()).clone();

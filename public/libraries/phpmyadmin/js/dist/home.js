@@ -1,16 +1,16 @@
-const GitInfo = {
+var GitInfo = {
   /**
    * Version string to integer conversion.
    * @param {string} str
    * @return {number | false}
    */
-  parseVersionString: function (str) {
+  parseVersionString: function parseVersionString(str) {
     if (typeof str !== 'string') {
       return false;
     }
-    let add = 0;
+    var add = 0;
     // Parse possible alpha/beta/rc/
-    const state = str.split('-');
+    var state = str.split('-');
     if (state.length >= 2) {
       if (state[1].substr(0, 2) === 'rc') {
         add = -20 - parseInt(state[1].substr(2), 10);
@@ -24,52 +24,52 @@ const GitInfo = {
       }
     }
     // Parse version
-    const x = str.split('.');
+    var x = str.split('.');
     // Use 0 for non existing parts
-    const maj = parseInt(x[0], 10) || 0;
-    const min = parseInt(x[1], 10) || 0;
-    const pat = parseInt(x[2], 10) || 0;
-    const hotfix = parseInt(x[3], 10) || 0;
+    var maj = parseInt(x[0], 10) || 0;
+    var min = parseInt(x[1], 10) || 0;
+    var pat = parseInt(x[2], 10) || 0;
+    var hotfix = parseInt(x[3], 10) || 0;
     return maj * 100000000 + min * 1000000 + pat * 10000 + hotfix * 100 + add;
   },
   /**
    * Indicates current available version on main page.
    * @param {object} data
    */
-  currentVersion: function (data) {
+  currentVersion: function currentVersion(data) {
     if (data && data.version && data.date) {
-      const current = GitInfo.parseVersionString($('span.version').text());
-      const latest = GitInfo.parseVersionString(data.version);
-      const url = './url.php?url=https://www.phpmyadmin.net/files/' + Functions.escapeHtml(encodeURIComponent(data.version)) + '/';
-      let versionInformationMessage = document.createElement('span');
+      var current = GitInfo.parseVersionString($('span.version').text());
+      var latest = GitInfo.parseVersionString(data.version);
+      var url = './url.php?url=https://www.phpmyadmin.net/files/' + Functions.escapeHtml(encodeURIComponent(data.version)) + '/';
+      var versionInformationMessage = document.createElement('span');
       versionInformationMessage.className = 'latest';
-      const versionInformationMessageLink = document.createElement('a');
+      var versionInformationMessageLink = document.createElement('a');
       versionInformationMessageLink.href = url;
       versionInformationMessageLink.className = 'disableAjax';
       versionInformationMessageLink.target = '_blank';
       versionInformationMessageLink.rel = 'noopener noreferrer';
-      const versionInformationMessageLinkText = document.createTextNode(data.version);
+      var versionInformationMessageLinkText = document.createTextNode(data.version);
       versionInformationMessageLink.appendChild(versionInformationMessageLinkText);
-      const prefixMessage = document.createTextNode(Messages.strLatestAvailable + ' ');
+      var prefixMessage = document.createTextNode(Messages.strLatestAvailable + ' ');
       versionInformationMessage.appendChild(prefixMessage);
       versionInformationMessage.appendChild(versionInformationMessageLink);
       if (latest > current) {
-        const message = Functions.sprintf(Messages.strNewerVersion, Functions.escapeHtml(data.version), Functions.escapeHtml(data.date));
-        let htmlClass = 'alert alert-primary';
+        var message = Functions.sprintf(Messages.strNewerVersion, Functions.escapeHtml(data.version), Functions.escapeHtml(data.date));
+        var htmlClass = 'alert alert-primary';
         if (Math.floor(latest / 10000) === Math.floor(current / 10000)) {
           /* Security update */
           htmlClass = 'alert alert-danger';
         }
         $('#newer_version_notice').remove();
-        const mainContainerDiv = document.createElement('div');
+        var mainContainerDiv = document.createElement('div');
         mainContainerDiv.id = 'newer_version_notice';
         mainContainerDiv.className = htmlClass;
-        const mainContainerDivLink = document.createElement('a');
+        var mainContainerDivLink = document.createElement('a');
         mainContainerDivLink.href = url;
         mainContainerDivLink.className = 'disableAjax';
         mainContainerDivLink.target = '_blank';
         mainContainerDivLink.rel = 'noopener noreferrer';
-        const mainContainerDivLinkText = document.createTextNode(message);
+        var mainContainerDivLinkText = document.createTextNode(message);
         mainContainerDivLink.appendChild(mainContainerDivLinkText);
         mainContainerDiv.appendChild(mainContainerDivLink);
         $('#maincontainer').append($(mainContainerDiv));
@@ -78,11 +78,11 @@ const GitInfo = {
         versionInformationMessage = document.createTextNode(' (' + Messages.strUpToDate + ')');
       }
       /* Remove extra whitespace */
-      const versionInfo = $('#li_pma_version').contents().get(2);
+      var versionInfo = $('#li_pma_version').contents().get(2);
       if (typeof versionInfo !== 'undefined') {
         versionInfo.textContent = versionInfo.textContent.trim();
       }
-      const $liPmaVersion = $('#li_pma_version');
+      var $liPmaVersion = $('#li_pma_version');
       $liPmaVersion.find('span.latest').remove();
       $liPmaVersion.append($(versionInformationMessage));
     }
@@ -90,7 +90,7 @@ const GitInfo = {
   /**
    * Loads Git revision data from ajax for index.php
    */
-  displayGitRevision: function () {
+  displayGitRevision: function displayGitRevision() {
     $('#is_git_revision').remove();
     $('#li_pma_version_git').remove();
     $.get('index.php?route=/git-revision', {

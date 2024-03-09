@@ -47,10 +47,10 @@ AJAX.registerOnload('server/databases.js', function () {
      * @var question    String containing the question to be asked for confirmation
      */
     var question = Messages.strDropDatabaseStrongWarning + ' ' + Functions.sprintf(Messages.strDoYouReally, selectedDbs.join('<br>'));
-    const modal = $('#dropDatabaseModal');
+    var modal = $('#dropDatabaseModal');
     modal.find('.modal-body').html(question);
     modal.modal('show');
-    const url = 'index.php?route=/server/databases/destroy&' + $(this).serialize();
+    var url = 'index.php?route=/server/databases/destroy&' + $(this).serialize();
     $('#dropDatabaseModalDropButton').on('click', function () {
       Functions.ajaxShowMessage(Messages.strProcessingRequest, false);
       var parts = url.split('?');

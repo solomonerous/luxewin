@@ -32,7 +32,7 @@ var DragDropImport = {
    *
    * @return {string}, extension for valid extension, '' otherwise
    */
-  getExtension: function (file) {
+  getExtension: function getExtension(file) {
     var arr = file.split('.');
     var ext = arr[arr.length - 1];
 
@@ -55,7 +55,7 @@ var DragDropImport = {
    *
    * @return {void}
    */
-  setProgress: function (hash, percent) {
+  setProgress: function setProgress(hash, percent) {
     $('.pma_sql_import_status div li[data-hash="' + hash + '"]').children('progress').val(percent);
   },
   /**
@@ -66,9 +66,9 @@ var DragDropImport = {
    *
    * @return {void}
    */
-  sendFileToServer: function (formData, hash) {
+  sendFileToServer: function sendFileToServer(formData, hash) {
     var jqXHR = $.ajax({
-      xhr: function () {
+      xhr: function xhr() {
         var xhrobj = $.ajaxSettings.xhr();
         if (xhrobj.upload) {
           xhrobj.upload.addEventListener('progress', function (event) {
@@ -90,7 +90,7 @@ var DragDropImport = {
       processData: false,
       cache: false,
       data: formData,
-      success: function (data) {
+      success: function success(data) {
         DragDropImport.importFinished(hash, false, data.success);
         if (!data.success) {
           DragDropImport.importStatus[DragDropImport.importStatus.length] = {
@@ -124,7 +124,6 @@ var DragDropImport = {
       }
     });
   },
-
   /**
    * Triggered when an object is dragged into the PMA UI
    *
@@ -132,7 +131,7 @@ var DragDropImport = {
    *
    * @return {void}
    */
-  dragEnter: function (event) {
+  dragEnter: function dragEnter(event) {
     // We don't want to prevent users from using
     // browser's default drag-drop feature on some page(s)
     if ($('.noDragDrop').length !== 0) {
@@ -157,7 +156,7 @@ var DragDropImport = {
    *
    * @return {boolean}
    */
-  hasFiles: function (event) {
+  hasFiles: function hasFiles(event) {
     return !(typeof event.originalEvent.dataTransfer.types === 'undefined' || $.inArray('Files', event.originalEvent.dataTransfer.types) < 0 || $.inArray('application/x-moz-nativeimage', event.originalEvent.dataTransfer.types) >= 0);
   },
   /**
@@ -167,7 +166,7 @@ var DragDropImport = {
    *
    * @return {void}
    */
-  dragOver: function (event) {
+  dragOver: function dragOver(event) {
     // We don't want to prevent users from using
     // browser's default drag-drop feature on some page(s)
     if ($('.noDragDrop').length !== 0) {
@@ -187,7 +186,7 @@ var DragDropImport = {
    *
    * @return {void}
    */
-  dragLeave: function (event) {
+  dragLeave: function dragLeave(event) {
     // We don't want to prevent users from using
     // browser's default drag-drop feature on some page(s)
     if ($('.noDragDrop').length !== 0) {
@@ -209,7 +208,7 @@ var DragDropImport = {
    *
    * @return {void}
    */
-  importFinished: function (hash, aborted, status) {
+  importFinished: function importFinished(hash, aborted, status) {
     $('.pma_sql_import_status div li[data-hash="' + hash + '"]').children('progress').hide();
     var icon = 'icon ic_s_success';
     // -- provide link to view upload status
@@ -242,7 +241,7 @@ var DragDropImport = {
    *
    * @return {void}
    */
-  drop: function (event) {
+  drop: function drop(event) {
     // We don't want to prevent users from using
     // browser's default drag-drop feature on some page(s)
     if ($('.noDragDrop').length !== 0) {

@@ -44,7 +44,6 @@ AJAX.registerTeardown('table/select.js', function () {
   $(document).off('click', 'span.open_search_gis_editor');
   $('body').off('change', 'select[name*="criteriaColumnOperators"]'); // Fix for bug #13778, changed 'click' to 'change'
 });
-
 AJAX.registerOnload('table/select.js', function () {
   /**
    * Prepare a div containing a link, otherwise it's incorrectly displayed
@@ -236,7 +235,7 @@ AJAX.registerOnload('table/select.js', function () {
           'column': columnName,
           'range_search': 1
         },
-        success: function (response) {
+        success: function success(response) {
           Functions.ajaxRemoveMessage($msgbox);
           if (response.success) {
             // Get the column min value.
@@ -288,7 +287,7 @@ AJAX.registerOnload('table/select.js', function () {
             Functions.ajaxShowMessage(response.error);
           }
         },
-        error: function () {
+        error: function error() {
           Functions.ajaxShowMessage(Messages.strErrorProcessingRequest);
         }
       });

@@ -125,7 +125,7 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
   }
 
   // adding event listener on select after AJAX request
-  var comparisonOperatorOnChange = function () {
+  var comparisonOperatorOnChange = function comparisonOperatorOnChange() {
     var tableRows = $('#inputSection select.column-operator');
     $.each(tableRows, function (index, item) {
       $(item).on('change', function () {
@@ -264,7 +264,7 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
   /**
    * Handle saving of a row in the editor
    */
-  var dataPointSave = function () {
+  var dataPointSave = function dataPointSave() {
     // Find changed values by comparing form values with selectedRow Object
     var newValues = {}; // Stores the values changed from original
     var sqlTypes = {};
@@ -272,7 +272,7 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
     var xChange = false;
     var yChange = false;
     var key;
-    var tempGetVal = function () {
+    var tempGetVal = function tempGetVal() {
       return $(this).val();
     };
     for (key in selectedRow) {
@@ -317,7 +317,6 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
           series[0][searchedDataKey][0] = '';
           // TODO: text values
         }
-
         currentChart.series[0].data = series[0];
         // TODO: axis changing
         currentChart.replot();
@@ -333,7 +332,6 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
           series[0][searchedDataKey][1] = '';
           // TODO: text values
         }
-
         currentChart.series[0].data = series[0];
         // TODO: axis changing
         currentChart.replot();
@@ -391,7 +389,6 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
       }); // End $.post
     } // End database update
   };
-
   $('#dataPointSaveButton').on('click', function () {
     dataPointSave();
   });

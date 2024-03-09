@@ -59,36 +59,38 @@ function exportPrivilegesModalHandler(data, msgbox) {
 /**
  * @implements EventListener
  */
-const EditUserGroup = {
+var EditUserGroup = {
   /**
    * @param {MouseEvent} event
    */
-  handleEvent: function (event) {
-    const editUserGroupModal = document.getElementById('editUserGroupModal');
-    const button = event.relatedTarget;
-    const username = button.getAttribute('data-username');
+  handleEvent: function handleEvent(event) {
+    var editUserGroupModal = document.getElementById('editUserGroupModal');
+    var button = event.relatedTarget;
+    var username = button.getAttribute('data-username');
     $.get('index.php?route=/server/user-groups/edit-form', {
       'username': username,
       'server': CommonParams.get('server')
-    }, data => {
+    }, function (data) {
       if (typeof data === 'undefined' || data.success !== true) {
         Functions.ajaxShowMessage(data.error, false, 'error');
         return;
       }
-      const modal = bootstrap.Modal.getInstance(editUserGroupModal);
-      const modalBody = editUserGroupModal.querySelector('.modal-body');
-      const saveButton = editUserGroupModal.querySelector('#editUserGroupModalSaveButton');
+      var modal = bootstrap.Modal.getInstance(editUserGroupModal);
+      var modalBody = editUserGroupModal.querySelector('.modal-body');
+      var saveButton = editUserGroupModal.querySelector('#editUserGroupModalSaveButton');
       modalBody.innerHTML = data.message;
-      saveButton.addEventListener('click', () => {
-        const form = $(editUserGroupModal.querySelector('#changeUserGroupForm'));
-        $.post('index.php?route=/server/privileges', form.serialize() + CommonParams.get('arg_separator') + 'ajax_request=1', data => {
+      saveButton.addEventListener('click', function () {
+        var form = $(editUserGroupModal.querySelector('#changeUserGroupForm'));
+        $.post('index.php?route=/server/privileges', form.serialize() + CommonParams.get('arg_separator') + 'ajax_request=1', function (data) {
           if (typeof data === 'undefined' || data.success !== true) {
             Functions.ajaxShowMessage(data.error, false, 'error');
             return;
           }
-          const userGroup = form.serializeArray().find(el => el.name === 'userGroup').value;
+          var userGroup = form.serializeArray().find(function (el) {
+            return el.name === 'userGroup';
+          }).value;
           // button -> td -> tr -> td.usrGroup
-          const userGroupTableCell = button.parentElement.parentElement.querySelector('.usrGroup');
+          var userGroupTableCell = button.parentElement.parentElement.querySelector('.usrGroup');
           userGroupTableCell.textContent = userGroup;
         });
         modal.hide();
@@ -100,29 +102,29 @@ const EditUserGroup = {
 /**
  * @implements EventListener
  */
-const AccountLocking = {
-  handleEvent: function () {
-    const button = this;
-    const isLocked = button.dataset.isLocked === 'true';
-    const url = isLocked ? 'index.php?route=/server/privileges/account-unlock' : 'index.php?route=/server/privileges/account-lock';
-    const params = {
+var AccountLocking = {
+  handleEvent: function handleEvent() {
+    var button = this;
+    var isLocked = button.dataset.isLocked === 'true';
+    var url = isLocked ? 'index.php?route=/server/privileges/account-unlock' : 'index.php?route=/server/privileges/account-lock';
+    var params = {
       'username': button.dataset.userName,
       'hostname': button.dataset.hostName,
       'ajax_request': true,
       'server': CommonParams.get('server')
     };
-    $.post(url, params, data => {
+    $.post(url, params, function (data) {
       if (data.success === false) {
         Functions.ajaxShowMessage(data.error);
         return;
       }
       if (isLocked) {
-        const lockIcon = Functions.getImage('s_lock', Messages.strLock, {}).toString();
+        var lockIcon = Functions.getImage('s_lock', Messages.strLock, {}).toString();
         button.innerHTML = '<span class="text-nowrap">' + lockIcon + ' ' + Messages.strLock + '</span>';
         button.title = Messages.strLockAccount;
         button.dataset.isLocked = 'false';
       } else {
-        const unlockIcon = Functions.getImage('s_unlock', Messages.strUnlock, {}).toString();
+        var unlockIcon = Functions.getImage('s_unlock', Messages.strUnlock, {}).toString();
         button.innerHTML = '<span class="text-nowrap">' + unlockIcon + ' ' + Messages.strUnlock + '</span>';
         button.title = Messages.strUnlockAccount;
         button.dataset.isLocked = 'true';
@@ -153,7 +155,7 @@ const AccountLocking = {
 AJAX.registerTeardown('server/privileges.js', function () {
   $('#fieldset_add_user_login').off('change', 'input[name=\'username\']');
   $(document).off('click', '#deleteUserCard .btn.ajax');
-  const editUserGroupModal = document.getElementById('editUserGroupModal');
+  var editUserGroupModal = document.getElementById('editUserGroupModal');
   if (editUserGroupModal) {
     editUserGroupModal.removeEventListener('show.bs.modal', EditUserGroup);
   }
@@ -288,7 +290,7 @@ AJAX.registerOnload('server/privileges.js', function () {
     });
   }); // end Revoke User
 
-  const editUserGroupModal = document.getElementById('editUserGroupModal');
+  var editUserGroupModal = document.getElementById('editUserGroupModal');
   if (editUserGroupModal) {
     editUserGroupModal.addEventListener('show.bs.modal', EditUserGroup);
   }
@@ -351,7 +353,7 @@ AJAX.registerOnload('server/privileges.js', function () {
   /*
    * Create submenu for simpler interface
    */
-  var addOrUpdateSubmenu = function () {
+  var addOrUpdateSubmenu = function addOrUpdateSubmenu() {
     var $subNav = $('.nav-pills');
     var $editUserDialog = $('#edit_user_dialog');
     var submenuLabel;
@@ -413,8 +415,8 @@ AJAX.registerOnload('server/privileges.js', function () {
    * @param {HTMLElement} e
    * @return {void}
    */
-  var tableSelectAll = function (e) {
-    const method = e.target.getAttribute('data-select-target');
+  var tableSelectAll = function tableSelectAll(e) {
+    var method = e.target.getAttribute('data-select-target');
     var options = $(method).first().children();
     options.each(function (_, obj) {
       obj.selected = true;

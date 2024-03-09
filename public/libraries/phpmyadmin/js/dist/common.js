@@ -26,7 +26,7 @@ var CommonParams = function () {
      *
      * @return {void}
      */
-    setAll: function (obj) {
+    setAll: function setAll(obj) {
       var updateNavigation = false;
       for (var i in obj) {
         if (params[i] !== undefined && params[i] !== obj[i]) {
@@ -48,7 +48,7 @@ var CommonParams = function () {
      *
      * @return {string}
      */
-    get: function (name) {
+    get: function get(name) {
       return params[name];
     },
     /**
@@ -59,7 +59,7 @@ var CommonParams = function () {
      *
      * @return {CommonParams} For chainability
      */
-    set: function (name, value) {
+    set: function set(name, value) {
       var updateNavigation = false;
       if (name === 'db' || name === 'table' && params[name] !== value) {
         updateNavigation = true;
@@ -77,7 +77,7 @@ var CommonParams = function () {
      *
      * @return {string}
      */
-    getUrlQuery: function (separator) {
+    getUrlQuery: function getUrlQuery(separator) {
       var sep = typeof separator !== 'undefined' ? separator : '?';
       var common = this.get('common_query');
       var argsep = CommonParams.get('arg_separator');
@@ -107,7 +107,7 @@ var CommonActions = {
    *
    * @return {void}
    */
-  setDb: function (newDb) {
+  setDb: function setDb(newDb) {
     if (newDb !== CommonParams.get('db')) {
       CommonParams.setAll({
         'db': newDb,
@@ -122,7 +122,7 @@ var CommonActions = {
    *
    * @return {void}
    */
-  openDb: function (newDb) {
+  openDb: function openDb(newDb) {
     CommonParams.set('db', newDb).set('table', '');
     this.refreshMain(CommonParams.get('opendb_url'));
   },
@@ -135,8 +135,8 @@ var CommonActions = {
    *
    * @return {void}
    */
-  refreshMain: function (url) {
-    let callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+  refreshMain: function refreshMain(url) {
+    var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
     var newUrl = url;
     if (!newUrl) {
       newUrl = $('#selflink').find('a').attr('href') || window.location.pathname;

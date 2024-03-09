@@ -1,3 +1,4 @@
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 /**
  * Functions used in Setup configuration forms
  */
@@ -87,12 +88,12 @@ function ajaxValidate(parent, id, values) {
       id: id,
       values: JSON.stringify(values)
     },
-    success: function (response) {
+    success: function success(response) {
       if (response === null) {
         return;
       }
       var error = {};
-      if (typeof response !== 'object') {
+      if (_typeof(response) !== 'object') {
         error[$parent.id] = [response];
       } else if (typeof response.error !== 'undefined') {
         error[$parent.id] = [response.error];
@@ -104,7 +105,7 @@ function ajaxValidate(parent, id, values) {
       }
       displayErrors(error);
     },
-    complete: function () {
+    complete: function complete() {
       $parent.removeData('ajax');
     }
   }));
@@ -127,7 +128,7 @@ $.extend(true, validators, {
      *
      * @return {true}
      */
-    hide_db: function (isKeyUp) {
+    hide_db: function hide_db(isKeyUp) {
       // eslint-disable-line camelcase
       if (!isKeyUp && this.value !== '') {
         var data = {};
@@ -143,7 +144,7 @@ $.extend(true, validators, {
      *
      * @return {true}
      */
-    TrustedProxies: function (isKeyUp) {
+    TrustedProxies: function TrustedProxies(isKeyUp) {
       if (!isKeyUp && this.value !== '') {
         var data = {};
         data[this.id] = this.value;
@@ -161,7 +162,7 @@ $.extend(true, validators, {
      *
      * @return {true}
      */
-    Server: function (isKeyUp) {
+    Server: function Server(isKeyUp) {
       if (!isKeyUp) {
         ajaxValidate(this, 'Server', getAllValues());
       }
@@ -174,7 +175,7 @@ $.extend(true, validators, {
      *
      * @return {true}
      */
-    Server_login_options: function (isKeyUp) {
+    Server_login_options: function Server_login_options(isKeyUp) {
       // eslint-disable-line camelcase
       return validators.fieldset.Server.apply(this, [isKeyUp]);
     },
@@ -185,7 +186,7 @@ $.extend(true, validators, {
      *
      * @return {true}
      */
-    Server_pmadb: function (isKeyUp) {
+    Server_pmadb: function Server_pmadb(isKeyUp) {
       // eslint-disable-line camelcase
       if (isKeyUp) {
         return true;

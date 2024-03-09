@@ -122,7 +122,7 @@ var DesignerOfflineDB = function () {
         return;
       }
       results.push(result.value);
-      result.continue();
+      result["continue"]();
     };
     cursorRequest.onerror = designerDB.onerror;
   };
@@ -186,7 +186,7 @@ var DesignerOfflineDB = function () {
       return;
     }
     var objStore = designerDB.getObjectStore(table);
-    var request = objStore.delete(parseInt(id));
+    var request = objStore["delete"](parseInt(id));
     request.onsuccess = function () {
       if (typeof callback === 'function') {
         callback(true);

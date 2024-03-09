@@ -9,28 +9,28 @@ Route::get('/telegram/login/new/{id}', function ($id) {
     return redirect('/');
 });
 
-Route::post('/createPromoTG', 'GeneralController@createPromoTG');
+// Route::post('/createPromoTG', 'GeneralController@createPromoTG');
 
 Route::get('/go/{ref_id}', function ($ref_id) {
     session(['ref_id' => $ref_id]);
     return redirect('/');
 });
 
-Route::post("/vk_bot_callback",function (Request $request){
-    $handler = new ServerHandler();
-    $data = json_decode(file_get_contents('php://input'));
-    $handler->parse($data);
-});
+// Route::post("/vk_bot_callback",function (Request $request){
+//     $handler = new ServerHandler();
+//     $data = json_decode(file_get_contents('php://input'));
+//     $handler->parse($data);
+// });
 
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/vk_auth', 'SocialController@index')->name('vk.auth');
-    Route::get('/vk/auth/callback', 'SocialController@callback');
+    // Route::get('/vk_auth', 'SocialController@index')->name('vk.auth');
+    // Route::get('/vk/auth/callback', 'SocialController@callback');
 
     Route::get('/tg_auth', 'SocialController@tg_index')->name('tg.auth');
     Route::get('/tg/auth/callback', 'SocialController@tg_callback');
 
-    Route::get('/yandex_auth', 'SocialController@yandex_index')->name('yandex.auth');
-    Route::get('/yandex/auth/callback', 'SocialController@yandex_callback');
+    // Route::get('/yandex_auth', 'SocialController@yandex_index')->name('yandex.auth');
+    // Route::get('/yandex/auth/callback', 'SocialController@yandex_callback');
 
     Route::get('/google_auth', 'SocialController@google_index')->name('google.auth');
     Route::get('/google/auth/callback', 'SocialController@google_callback');
@@ -43,9 +43,9 @@ Route::post('/update_card', 'Controller@updateCard');
 Route::post('/balance/get', 'Controller@balanceGet');
 
 Route::post('/bonus/get', 'Controller@bonusGet');
-Route::post('/bonus/vk', 'Controller@bonusGetVk');
-Route::post('/bonus/tg', 'Controller@bonusGetTg');
-Route::post('/bonus/checktg', 'Controller@bonusCheckTg');
+// Route::post('/bonus/vk', 'Controller@bonusGetVk');
+// Route::post('/bonus/tg', 'Controller@bonusGetTg');
+// Route::post('/bonus/checktg', 'Controller@bonusCheckTg');
 Route::post('/bonus/ref', 'Controller@bonusRef');
 
 Route::post('/chat/get', 'ChatController@get');
@@ -88,13 +88,13 @@ Route::get('/winx100', 'X100Controller@winWheel');
 Route::get('/generate_jackpotnumber', 'JackpotController@generateJackpotNumber');
 Route::get('/cashhuntfinish', 'JackpotController@cashHuntFinish');
 
-Route::post('/repost/all', 'AdminController@repostAll'); 
+Route::post('/repost/all', 'AdminController@repostAll');
 
 Route::post('/withdrawRub', 'WithdrawController@withdrawRub');
 
-Route::post('/status/all', 'AdminController@statusAll'); 
-Route::post('/systemdeps/all', 'AdminController@systemDepsAll'); 
-Route::post('/systemwithdraws/all', 'AdminController@systemWithdrawsAll'); 
+Route::post('/status/all', 'AdminController@statusAll');
+Route::post('/systemdeps/all', 'AdminController@systemDepsAll');
+Route::post('/systemwithdraws/all', 'AdminController@systemWithdrawsAll');
 
 Route::post('/deposit/go', 'PaymentController@go');
 Route::post('/deposit/checkstatus', 'PaymentController@checkStatus');

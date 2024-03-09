@@ -22,7 +22,7 @@ var processList = {
    *
    * @return {void}
    */
-  init: function () {
+  init: function init() {
     processList.setRefreshLabel();
     if (processList.refreshUrl === null) {
       processList.refreshUrl = 'index.php?route=/server/status/processes/refresh';
@@ -40,7 +40,7 @@ var processList = {
    *
    * @return {void}
    */
-  killProcessHandler: function (event) {
+  killProcessHandler: function killProcessHandler(event) {
     event.preventDefault();
     var argSep = CommonParams.get('arg_separator');
     var params = $(this).getPostData();
@@ -74,7 +74,7 @@ var processList = {
    * Handles Auto Refreshing
    * @return {void}
    */
-  refresh: function () {
+  refresh: function refresh() {
     // abort any previous pending requests
     // this is necessary, it may go into
     // multiple loops causing unnecessary
@@ -101,7 +101,7 @@ var processList = {
    *
    * @return {void}
    */
-  abortRefresh: function () {
+  abortRefresh: function abortRefresh() {
     if (processList.refreshRequest !== null) {
       processList.refreshRequest.abort();
       processList.refreshRequest = null;
@@ -114,7 +114,7 @@ var processList = {
    *
    * @return {void}
    */
-  setRefreshLabel: function () {
+  setRefreshLabel: function setRefreshLabel() {
     var img = 'play';
     var label = Messages.strStartRefresh;
     if (processList.autoRefresh) {
@@ -131,7 +131,7 @@ var processList = {
    *
    * @return {object} urlParams - url parameters with autoRefresh request
    */
-  getUrlParams: function () {
+  getUrlParams: function getUrlParams() {
     var urlParams = {
       'server': CommonParams.get('server'),
       'ajax_request': true,

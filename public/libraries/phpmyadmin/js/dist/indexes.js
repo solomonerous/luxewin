@@ -1,3 +1,7 @@
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /**
  * @fileoverview    function used for index manipulation pages
  * @name            Table Structure
@@ -300,16 +304,13 @@ Indexes.showAddIndexDialog = function (sourceArray, arrayIndex, targetColumns, c
     columns[columnName] = [columnType, targetColumns[i]];
   }
   postData.columns = JSON.stringify(columns);
-  var buttonOptions = {
-    [Messages.strGo]: {
-      text: Messages.strGo,
-      class: 'btn btn-primary'
-    },
-    [Messages.strCancel]: {
-      text: Messages.strCancel,
-      class: 'btn btn-secondary'
-    }
-  };
+  var buttonOptions = _defineProperty(_defineProperty({}, Messages.strGo, {
+    text: Messages.strGo,
+    "class": 'btn btn-primary'
+  }), Messages.strCancel, {
+    text: Messages.strCancel,
+    "class": 'btn btn-secondary'
+  });
   buttonOptions[Messages.strGo].click = function () {
     var isMissingValue = false;
     $('select[name="index[columns][names][]"]').each(function () {
@@ -358,7 +359,7 @@ Indexes.showAddIndexDialog = function (sourceArray, arrayIndex, targetColumns, c
           title: Messages.strAddIndex,
           width: 450,
           minHeight: 250,
-          create: function () {
+          create: function create() {
             $(this).on('keypress', function (e) {
               if (e.which === 13 || e.keyCode === 13 || window.event.keyCode === 13) {
                 e.preventDefault();
@@ -367,7 +368,7 @@ Indexes.showAddIndexDialog = function (sourceArray, arrayIndex, targetColumns, c
               }
             });
           },
-          open: function () {
+          open: function open() {
             Functions.checkIndexName('index_frm');
             Functions.showHints($div);
             $('#index_columns').find('td').each(function () {
@@ -381,7 +382,7 @@ Indexes.showAddIndexDialog = function (sourceArray, arrayIndex, targetColumns, c
           },
           modal: true,
           buttons: buttonOptions,
-          close: function () {
+          close: function close() {
             $(this).remove();
           }
         });
@@ -429,16 +430,13 @@ Indexes.indexTypeSelectionDialog = function (sourceArray, indexChoice, colIndex)
   // For UNIQUE/INDEX type, show choice for single-column and composite index.
   $dialogContent.append($singleColumnRadio);
   $dialogContent.append($compositeIndexRadio);
-  var buttonOptions = {
-    [Messages.strGo]: {
-      text: Messages.strGo,
-      class: 'btn btn-primary'
-    },
-    [Messages.strCancel]: {
-      text: Messages.strCancel,
-      class: 'btn btn-secondary'
-    }
-  };
+  var buttonOptions = _defineProperty(_defineProperty({}, Messages.strGo, {
+    text: Messages.strGo,
+    "class": 'btn btn-primary'
+  }), Messages.strCancel, {
+    text: Messages.strCancel,
+    "class": 'btn btn-secondary'
+  });
 
   // 'OK' operation.
   buttonOptions[Messages.strGo].click = function () {
@@ -486,7 +484,7 @@ Indexes.indexTypeSelectionDialog = function (sourceArray, indexChoice, colIndex)
     title: Messages.strAddIndex,
     resizable: false,
     buttons: buttonOptions,
-    open: function () {
+    open: function open() {
       $('#composite_index').on('change', function () {
         if ($(this).is(':checked')) {
           $dialogContent.append(Indexes.getCompositeIndexList(sourceArray, colIndex));
@@ -500,7 +498,7 @@ Indexes.indexTypeSelectionDialog = function (sourceArray, indexChoice, colIndex)
         }
       });
     },
-    close: function () {
+    close: function close() {
       $('#composite_index').off('change');
       $('#single_column').off('change');
       $(this).remove();

@@ -26,7 +26,7 @@ var AJAX = {
    * @var {Function} callback Callback to execute after a successful request
    *                          Used by CommonActions from common.js
    */
-  callback: function () {},
+  callback: function callback() {},
   /**
    * @var {boolean} debug Makes noise in your Firebug console
    */
@@ -44,7 +44,7 @@ var AJAX = {
    *
    * @return {number}
    */
-  hash: function (key) {
+  hash: function hash(key) {
     var newKey = key;
     /* https://burtleburtle.net/bob/hash/doobs.html#one */
     newKey += '';
@@ -69,7 +69,7 @@ var AJAX = {
    *
    * @return {self} For chaining
    */
-  registerOnload: function (file, func) {
+  registerOnload: function registerOnload(file, func) {
     var eventName = 'onload_' + AJAX.hash(file);
     $(document).on(eventName, func);
     if (this.debug) {
@@ -90,7 +90,7 @@ var AJAX = {
    *
    * @return {self} For chaining
    */
-  registerTeardown: function (file, func) {
+  registerTeardown: function registerTeardown(file, func) {
     var eventName = 'teardown_' + AJAX.hash(file);
     $(document).on(eventName, func);
     if (this.debug) {
@@ -109,7 +109,7 @@ var AJAX = {
    *
    * @return {void}
    */
-  fireOnload: function (file) {
+  fireOnload: function fireOnload(file) {
     var eventName = 'onload_' + AJAX.hash(file);
     $(document).trigger(eventName);
     if (this.debug) {
@@ -127,7 +127,7 @@ var AJAX = {
    *
    * @return {void}
    */
-  fireTeardown: function (file) {
+  fireTeardown: function fireTeardown(file) {
     var eventName = 'teardown_' + AJAX.hash(file);
     $(document).triggerHandler(eventName);
     if (this.debug) {
@@ -144,7 +144,7 @@ var AJAX = {
    *
    * @return {void}
    */
-  lockPageHandler: function (event) {
+  lockPageHandler: function lockPageHandler(event) {
     // don't consider checkbox event
     if (typeof event.target !== 'undefined') {
       if (event.target.type === 'checkbox') {
@@ -199,12 +199,12 @@ var AJAX = {
    *
    * @return {void}
    */
-  resetLock: function () {
+  resetLock: function resetLock() {
     AJAX.lockedTargets = {};
     $('#lock_page_icon').html('');
   },
   handleMenu: {
-    replace: function (content) {
+    replace: function replace(content) {
       $('#floating_menubar').html(content)
       // Remove duplicate wrapper
       // TODO: don't send it in the response
@@ -219,7 +219,7 @@ var AJAX = {
    *
    * @return {boolean | void}
    */
-  requestHandler: function (event) {
+  requestHandler: function requestHandler(event) {
     // In some cases we don't want to handle the request here and either
     // leave the browser deal with it natively (e.g: file download)
     // or leave an existing ajax event handler present elsewhere deal with it
@@ -294,7 +294,6 @@ var AJAX = {
       // eslint-disable-next-line no-console
       console.log('Loading: ' + url); // no need to translate
     }
-
     if (isLink) {
       AJAX.active = true;
       AJAX.$msgbox = Functions.ajaxShowMessage();
@@ -340,7 +339,7 @@ var AJAX = {
    *
    * @return {void}
    */
-  loginResponseHandler: function (data) {
+  loginResponseHandler: function loginResponseHandler(data) {
     if (typeof data === 'undefined' || data === null) {
       return;
     }
@@ -359,7 +358,7 @@ var AJAX = {
     if (data.errors) {
       $('<div></div>', {
         id: 'pma_errors',
-        class: 'clearfloat d-print-none'
+        "class": 'clearfloat d-print-none'
       }).insertAfter('#selflink').append(data.errors);
       // bind for php error reporting forms (bottom)
       $('#pma_ignore_errors_bottom').on('click', function (e) {
@@ -442,7 +441,7 @@ var AJAX = {
    *
    * @return {void}
    */
-  responseHandler: function (data) {
+  responseHandler: function responseHandler(data) {
     if (typeof data === 'undefined' || data === null) {
       return;
     }
@@ -527,7 +526,7 @@ var AJAX = {
         if (data.errors) {
           $('<div></div>', {
             id: 'pma_errors',
-            class: 'clearfloat d-print-none'
+            "class": 'clearfloat d-print-none'
           }).insertAfter('#selflink').append(data.errors);
           // bind for php error reporting forms (bottom)
           $('#pma_ignore_errors_bottom').on('click', function (e) {
@@ -624,7 +623,7 @@ var AJAX = {
      *
      * @return {self} For chaining
      */
-    add: function (file, fire) {
+    add: function add(file, fire) {
       this.scripts.push(file);
       if (fire) {
         // Record whether to fire any events for the file
@@ -641,7 +640,7 @@ var AJAX = {
      *
      * @return {void}
      */
-    load: function (files, callback) {
+    load: function load(files, callback) {
       var self = this;
       var i;
       // Clear loaded scripts if they are from another version of phpMyAdmin.
@@ -685,7 +684,7 @@ var AJAX = {
      *
      * @return {void}
      */
-    done: function (script, callback) {
+    done: function done(script, callback) {
       if ($.inArray(script, this.scriptsToBeFired)) {
         AJAX.fireOnload(script);
       }
@@ -710,7 +709,7 @@ var AJAX = {
      *
      * @return {void}
      */
-    appendScript: function (name, callback) {
+    appendScript: function appendScript(name, callback) {
       var head = document.head || document.getElementsByTagName('head')[0];
       var script = document.createElement('script');
       var self = this;
@@ -731,7 +730,7 @@ var AJAX = {
      *
      * @return {void}
      */
-    reset: function (callback) {
+    reset: function reset(callback) {
       for (var i in this.scriptsToBeFired) {
         AJAX.fireTeardown(this.scriptsToBeFired[i]);
       }

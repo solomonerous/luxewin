@@ -1,3 +1,6 @@
 {
-    "translateIt.targetLanguage": "English"
+    "translateIt.targetLanguage": "English",
+    "cSpell.words": [
+        "guzzlehttp"
+    ]
 }
